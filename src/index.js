@@ -9,13 +9,15 @@ module.exports = function (config, testRunResult, logger) {
     result = JSON.parse(result)
 
     let restqa = global.restqa || {}
+    
+    config = config || restqa.CONFIG
 
     if (!result.length) return
 
     let metadata = {
-      id: config.uuid || restqa.uuid || uuidv4(),
-      startTime: config.startTime || restqa.startTime || moment().format(),
-      env: config.name || restqa.env,
+      id: restqa.uuid || config.uuid || uuidv4(),
+      startTime: restqa.startTime || config.startTime || moment().format(),
+      env: config.name,
     }
 
     let features = result.map(feature => {
@@ -85,8 +87,10 @@ module.exports = function (config, testRunResult, logger) {
     Promise.all(reporters)
       .then(result => {
         //console.log(result)
-        console.log('\n\n')
+        console.log('\n')
+        console.log('==========================================')
         console.log(result.flat().join('\n'))
+        console.log('==========================================')
         //logger(result.flat().join('\n'))
       })
       .catch(err => {
