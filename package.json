@@ -1,6 +1,6 @@
 {
   "name": "@restqa/cucumber-export",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -19,5 +19,16 @@
   "bugs": {
     "url": "https://github.com/restqa/cucumber-export/issues"
   },
-  "homepage": "https://github.com/restqa/cucumber-export#readme"
+  "homepage": "https://github.com/restqa/cucumber-export#readme",
+  "dependencies": {
+    "async": "^3.2.0",
+    "cucumber": "^6.0.5",
+    "got": "^10.7.0",
+    "moment": "^2.24.0",
+    "uuid": "^7.0.2"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0",
+    "standard": "^14.3.3"
+  }
 }
