@@ -4,12 +4,11 @@ const moment = require('moment')
 const $async = require('async')
 
 module.exports = function (config, testRun) {
-
   const url = new URL(config.url)
-  config.index = config.index || 'restqa-bdd-rest-api' 
-  let index = config.index + '-' + moment().format("YYYYMMDD");  
+  config.index = config.index || 'restqa-bdd-rest-api'
+  const index = config.index + '-' + moment().format('YYYYMMDD')
 
-  let options = {
+  const options = {
     hostname: url.hostname,
     port: url.port,
     protocol: url.protocol,
@@ -18,11 +17,10 @@ module.exports = function (config, testRun) {
     responseType: 'json'
   }
 
-  let result = []
+  const result = []
 
   return new Promise((resolve, reject) => {
-
-    const q = $async.queue(function(opt, callback) {
+    const q = $async.queue(function (opt, callback) {
       got(opt)
         .then(res => {
           result.push(`[ELASTIC-SEARCH REPORT][${res.statusCode}] - ${config.url} - index : ${index}`)
@@ -31,7 +29,7 @@ module.exports = function (config, testRun) {
         .catch(callback)
     }, 5)
 
-    q.error(function(err, task) {
+    q.error(function (err, task) {
       let code = err.code
       if (err.response) code = err.response.statusCode
       result.push(`[ELASTIC-SEARCH REPORT][${code}] - ${config.url} - index : ${index}`)
@@ -41,14 +39,14 @@ module.exports = function (config, testRun) {
       resolve(result)
     })
 
-    let { features } = testRun
+    const { features } = testRun
     delete testRun.features
 
-    q.push(Object.assign({json: testRun}, options))
+    q.push(Object.assign({ json: testRun }, options))
     features.forEach(feature => {
-      q.push(Object.assign({json: feature}, options))
-      scenarios = feature.elements.forEach(scenario => {
-        q.push(Object.assign({json: scenario}, options))
+      q.push(Object.assign({ json: feature }, options))
+      feature.elements.forEach(scenario => {
+        q.push(Object.assign({ json: scenario }, options))
       })
     })
   })

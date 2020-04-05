@@ -3,7 +3,7 @@ const { URL } = require('url')
 
 module.exports = function (config, result) {
   const url = new URL(config.url)
-  let options = {
+  const options = {
     hostname: url.hostname,
     port: url.port,
     protocol: url.protocol,
@@ -19,8 +19,8 @@ module.exports = function (config, result) {
         resolve(`[HTTP REPORT][${res.statusCode}] - ${config.url}`)
       })
       .catch(err => {
-        //console.log(err)
-        reject(`[HTTP REPORT][${err.response.statusCode}] - ${config.url} : ${JSON.stringify(err.response.body)}`)
+        // console.log(err)
+        reject(new Error(`[HTTP REPORT][${err.response.statusCode}] - ${config.url} : ${JSON.stringify(err.response.body)}`))
       })
   })
 }
