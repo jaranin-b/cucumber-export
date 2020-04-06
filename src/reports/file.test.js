@@ -2,29 +2,28 @@ beforeEach(() => {
   jest.resetModules()
 })
 
-describe('#Channel - CSV', () => {
-
+describe('#Channel - File', () => {
   const path = require('path')
 
   test('Rejected if the config doesn\'t contain the path', () => {
     const File = require('./file')
-    let config  = {}
-    let result  = {}
+    const config = {}
+    const result = {}
     expect(File(config, result)).rejects.toThrow(new Error('config.path is required for the "file" report'))
   })
 
   test('Rejected if the writting is failing', () => {
-    let fs = require('fs')
+    const fs = require('fs')
     jest.mock('fs')
     fs.writeFile = jest.fn((filename, output, format, cb) => {
-      cb('foo is not working')
+      cb(new Error('foo is not working'))
     })
 
     const File = require('./file')
-    let config  = {
+    const config = {
       path: 'test.json'
     }
-    let result  = {}
+    const result = {}
     expect(File(config, result)).rejects.toThrow(new Error('[FILE REPORT][ERROR] - test.json : foo is not working'))
     expect(fs.writeFile.mock.calls.length).toBe(1)
     expect(fs.writeFile.mock.calls[0][0]).toEqual(path.resolve('test.json'))
@@ -33,17 +32,17 @@ describe('#Channel - CSV', () => {
   })
 
   test('Success Case', () => {
-    let fs = require('fs')
+    const fs = require('fs')
     jest.mock('fs')
     fs.writeFile = jest.fn((filename, output, format, cb) => {
       cb()
     })
 
     const File = require('./file')
-    let config  = {
+    const config = {
       path: 'test.json'
     }
-    let result  = {}
+    const result = {}
     expect(File(config, result)).resolves.toEqual(`[FILE REPORT][SUCCESS] - ${path.resolve('test.json')}`)
   })
 })

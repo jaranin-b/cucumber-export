@@ -4,22 +4,24 @@ const moment = require('moment')
 const $async = require('async')
 
 module.exports = function (config, testRun) {
-  const url = new URL(config.url)
-  config.index = config.index || 'restqa-bdd-rest-api'
-  const index = config.index + '-' + moment().format('YYYYMMDD')
-
-  const options = {
-    hostname: url.hostname,
-    port: url.port,
-    protocol: url.protocol,
-    pathname: `/${index}/_doc`,
-    method: 'POST',
-    responseType: 'json'
-  }
-
-  const result = []
-
   return new Promise((resolve, reject) => {
+    if (!config.url) return reject(new Error('config.url is required for the "elastic-search" report'))
+
+    const url = new URL(config.url)
+    config.index = config.index || 'restqa-bdd-rest-api'
+    const index = config.index + '-' + moment().format('YYYYMMDD')
+
+    const options = {
+      hostname: url.hostname,
+      port: url.port,
+      protocol: url.protocol,
+      pathname: `/${index}/_doc`,
+      method: 'POST',
+      responseType: 'json'
+    }
+
+    const result = []
+
     const q = $async.queue(function (opt, callback) {
       got(opt)
         .then(res => {
@@ -31,7 +33,9 @@ module.exports = function (config, testRun) {
 
     q.error(function (err, task) {
       let code = err.code
-      if (err.response) code = err.response.statusCode
+      if (err.response) {
+        code = err.response.statusCode
+      }
       result.push(`[ELASTIC-SEARCH REPORT][${code}] - ${config.url} - index : ${index}`)
     })
 
@@ -43,6 +47,7 @@ module.exports = function (config, testRun) {
     delete testRun.features
 
     q.push(Object.assign({ json: testRun }, options))
+
     features.forEach(feature => {
       q.push(Object.assign({ json: feature }, options))
       feature.elements.forEach(scenario => {

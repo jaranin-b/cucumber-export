@@ -4,6 +4,11 @@ const Format = require('./format')
 const Reports = require('./reports')
 
 module.exports = function (config, testRunResult, logger) {
+  if (!Array.isArray(config.outputs)) {
+    throw new Error('The config.outputs needs to be an array')
+  }
+
+  logger = logger || console.log
   return function (result) {
     result = JSON.parse(result)
 
@@ -26,18 +31,21 @@ module.exports = function (config, testRunResult, logger) {
         return Reports[output.type].call(this, output.config, result)
       })
 
-    Promise.all(outputs)
+    if (!outputs.length) return
+
+    return Promise.all(outputs)
       .then(response => {
-        // console.log(result)
-        console.log('\n')
-        console.log('==========================================')
-        console.log(response.flat().join('\n'))
-        console.log('==========================================')
-        // logger(result.flat().join('\n'))
+        const outputs = [
+          '\n',
+          '==========================================',
+          response.flat().join('\n'),
+          '=========================================='
+        ]
+        logger(outputs.join('\n'))
       })
       .catch(err => {
-        console.log(err)
-        // logger(err)
+        // console.log(err)
+        logger(err.message)
       })
   }
 }
