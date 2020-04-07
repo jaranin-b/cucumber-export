@@ -144,7 +144,7 @@ describe('#Channel - Elastic-search', () => {
 
     const { features } = result
 
-    const index = `restqa-bdd-rest-api-${currentDate}`
+    const index = `restqa-e2e-result-${currentDate}`
     const expectedResult = [
       `[ELASTIC-SEARCH REPORT][201] - http://my-elk.test - index : ${index}`,
       `[ELASTIC-SEARCH REPORT][201] - http://my-elk.test - index : ${index}`,

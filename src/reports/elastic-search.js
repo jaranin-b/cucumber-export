@@ -8,7 +8,7 @@ module.exports = function (config, testRun) {
     if (!config.url) return reject(new Error('config.url is required for the "elastic-search" report'))
 
     const url = new URL(config.url)
-    config.index = config.index || 'restqa-bdd-rest-api'
+    config.index = config.index || 'restqa-e2e-result'
     const index = config.index + '-' + moment().format('YYYYMMDD')
 
     const options = {
