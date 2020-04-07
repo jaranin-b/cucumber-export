@@ -1,10 +1,14 @@
 {
   "name": "@restqa/cucumber-export",
   "version": "0.0.2",
-  "description": "",
+  "description": "A simple cucumber-js formatter exporting your result to different endpoints",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "jest --watch --coverage",
+    "test:coverage": "jest --coverage",
+    "lint": "standard",
+    "lint:fix": "standard --fix"
   },
   "repository": {
     "type": "git",
@@ -13,8 +17,12 @@
   "peerDependencies": {
     "cucumber": "^6.0.5"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "cucumber-reporter",
+    "restqa",
+    "reporter"
+  ],
+  "author": "Olivier Rodomond <hi@olivierodo.me>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/restqa/cucumber-export/issues"
@@ -27,8 +35,31 @@
     "moment": "^2.24.0",
     "uuid": "^7.0.2"
   },
+  "engines": {
+    "node": ">=12.0.0"
+  },
   "devDependencies": {
     "jest": "^25.1.0",
     "standard": "^14.3.3"
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 0
+      }
+    }
+  },
+  "standard": {
+    "globals": [],
+    "env": [
+      "jest"
+    ],
+    "yoda": [
+      2,
+      "never"
+    ]
   }
 }
