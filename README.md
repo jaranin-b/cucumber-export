@@ -115,7 +115,7 @@ const { getFormatter } = require('@restqa/cucumber-export')
 let envConfig = {
   uuid: 'xxx-yyy-zzz',
   name: 'local',
-  env: 'uat',
+  env: 'uat',
   outputs: [
     {
       type: 'http',
