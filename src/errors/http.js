@@ -2,7 +2,16 @@ function Http (formatter, error) {
   var instance = error
   instance.formatter = formatter
   instance.name = 'HTTP'
-  const { response } = error
+  let { response } = error
+  if (!response) {
+    response = {
+      statusCode: error.code,
+      requestUrl: '',
+      body: null,
+      headers: null
+    }
+  }
+
   instance.customMsg = `[${formatter}][${response.statusCode}] - ${response.requestUrl} : ${JSON.stringify(response.body)}`
   instance.info = {
     formatter,
@@ -20,9 +29,7 @@ function Http (formatter, error) {
   }
 
   Object.setPrototypeOf(instance, Object.getPrototypeOf(this))
-  if (Error.captureStackTrace) {
-    Error.captureStackTrace(instance, Http)
-  }
+  Error.captureStackTrace(instance, Http)
   return instance
 }
 

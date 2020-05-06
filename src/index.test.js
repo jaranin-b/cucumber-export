@@ -27,8 +27,8 @@ describe('#index - src', () => {
     }
     const testRunResult = {}
     const instance = new Index(config, testRunResult)
-    const result = JSON.stringify({})
-    instance(result)
+    const result = []
+    instance.exports(result)
     expect(Format.mock.calls.length).toBe(0)
   })
 
@@ -64,11 +64,11 @@ describe('#index - src', () => {
     }
 
     const instance = new Index(config, testRunResult)
-    const result = JSON.stringify([{
+    const result = [{
       foo: 'bar'
-    }])
+    }]
 
-    instance(result)
+    instance.exports(result)
 
     expect(Format.mock.calls.length).toBe(1)
     const expectedMetadata = {
@@ -112,14 +112,12 @@ describe('#index - src', () => {
       }
     }
 
-    const logger = jest.fn()
-
-    const instance = new Index(config, testRunResult, logger)
-    const result = JSON.stringify([{
+    const instance = new Index(config, testRunResult)
+    const result = [{
       foo: 'bar'
-    }])
+    }]
 
-    await instance(result)
+    expect(instance.exports(result)).resolves.toEqual([{ status: 'fulfilled', value: ['my elk response'] }])
 
     expect(Format.mock.calls.length).toBe(1)
 
@@ -137,15 +135,6 @@ describe('#index - src', () => {
     expect(Reports.elk.mock.calls.length).toBe(1)
     expect(Reports.elk.mock.calls[0][0]).toEqual({ you: 'test' })
     expect(Reports.elk.mock.calls[0][1]).toEqual({ result: true })
-    expect(logger.mock.calls.length).toBe(1)
-    const expectedOutput = [
-      '\n',
-      '==========================================',
-      'my elk response',
-      '=========================================='
-    ].join('\n')
-    expect(logger.mock.calls.length).toBe(1)
-    expect(logger.mock.calls[0][0]).toEqual(expectedOutput)
   })
 
   test('Error returns from the return', async () => {
@@ -176,14 +165,12 @@ describe('#index - src', () => {
       }
     }
 
-    const logger = jest.fn()
-
-    const instance = new Index(config, testRunResult, logger)
-    const result = JSON.stringify([{
+    const instance = new Index(config, testRunResult)
+    const result = [{
       foo: 'bar'
-    }])
+    }]
 
-    await instance(result)
+    expect(instance.exports(result)).resolves.toEqual([{ status: 'rejected', reason: new Error('my elk Error') }])
 
     expect(Format.mock.calls.length).toBe(1)
 
@@ -201,11 +188,5 @@ describe('#index - src', () => {
     expect(Reports.elk.mock.calls.length).toBe(1)
     expect(Reports.elk.mock.calls[0][0]).toEqual({ you: 'test' })
     expect(Reports.elk.mock.calls[0][1]).toEqual({ result: true })
-    expect(logger.mock.calls.length).toBe(1)
-    const expectedOutput = [
-      'my elk Error'
-    ]
-    expect(logger.mock.calls.length).toBe(1)
-    expect(logger.mock.calls[0][0]).toEqual(expectedOutput[0])
   })
 })

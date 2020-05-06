@@ -2,6 +2,7 @@ const got = require('got')
 const { URL } = require('url')
 const moment = require('moment')
 const $async = require('async')
+const Errors = require('../errors')
 
 module.exports = function (config, testRun) {
   return new Promise((resolve, reject) => {
@@ -20,27 +21,27 @@ module.exports = function (config, testRun) {
       responseType: 'json'
     }
 
-    const result = []
+    // let result = 0
+    const errors = []
 
     const q = $async.queue(function (opt, callback) {
       got(opt)
         .then(res => {
-          result.push(`[ELASTIC-SEARCH REPORT][${res.statusCode}] - ${config.url} - index : ${index}`)
+          // result++
           callback()
         })
         .catch(callback)
     }, 5)
 
     q.error(function (err, task) {
-      let code = err.code
-      if (err.response) {
-        code = err.response.statusCode
-      }
-      result.push(`[ELASTIC-SEARCH REPORT][${code}] - ${config.url} - index : ${index}`)
+      errors.push(new Errors.HTTP('ELASTIC-SEARCH', err))
     })
 
     q.drain(() => {
-      resolve(result)
+      if (errors.length) {
+        return reject(errors[0])
+      }
+      resolve(`[ELASTIC-SEARCH REPORT] - ${config.url} - index : ${index}`)
     })
 
     const { features } = testRun

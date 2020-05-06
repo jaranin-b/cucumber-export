@@ -11,16 +11,18 @@ describe('#report - HTTP', () => {
   })
 
   test('Rejected if the request fail', () => {
+    const Errors = require('../errors')
     const got = require('got')
     jest.mock('got')
-    got.mockRejectedValue({
-      response: {
-        statusCode: 503,
-        body: {
-          err: 'foo/bar'
-        }
+    const gotError = new Error('got Msg')
+    gotError.response = {
+      statusCode: 503,
+      body: {
+        err: 'foo/bar'
       }
-    })
+    }
+
+    got.mockRejectedValue(gotError)
 
     const Http = require('./http')
     const config = {
@@ -30,7 +32,7 @@ describe('#report - HTTP', () => {
     const result = {
       success: true
     }
-    expect(Http(config, result)).rejects.toThrow(new Error('[HTTP REPORT][503] - http://my-url.test/report : {"err":"foo/bar"}'))
+    expect(Http(config, result)).rejects.toThrow(new Errors.HTTP('HTTP REPORT', gotError))
     const expectedOptions = {
       hostname: 'my-url.test',
       port: '',

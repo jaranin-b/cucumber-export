@@ -15,15 +15,17 @@ describe('#Channel - Elastic-search', () => {
 
   test('Rejected if call fails', async () => {
     const got = require('got')
+    const Errors = require('../errors')
     jest.mock('got')
-    got.mockRejectedValue({
-      response: {
-        statusCode: 503,
-        body: {
-          err: 'foo/bar'
-        }
+    const gotError = new Error('got Msg')
+    gotError.response = {
+      statusCode: 503,
+      body: {
+        err: 'foo/bar'
       }
-    })
+    }
+    got.mockRejectedValue(gotError)
+
     const Es = require('./elastic-search')
     const config = {
       url: 'http://my-elk.test',
@@ -41,13 +43,8 @@ describe('#Channel - Elastic-search', () => {
 
     const { features } = result
 
-    const expectedResult = [
-      `[ELASTIC-SEARCH REPORT][503] - http://my-elk.test - index : my-index-${currentDate}`,
-      `[ELASTIC-SEARCH REPORT][503] - http://my-elk.test - index : my-index-${currentDate}`,
-      `[ELASTIC-SEARCH REPORT][503] - http://my-elk.test - index : my-index-${currentDate}`
-    ]
+    await expect(Es(config, result)).rejects.toThrow(new Errors.HTTP('ELASTIC-SEARCH REPORT', gotError))
 
-    await expect(Es(config, result)).resolves.toEqual(expectedResult)
     expect(result.features).toBeUndefined()
 
     expect(got.mock.calls.length).toBe(3)
@@ -90,9 +87,10 @@ describe('#Channel - Elastic-search', () => {
   test('Rejected if another error occured', async () => {
     const got = require('got')
     jest.mock('got')
-    got.mockRejectedValue({
-      code: 'ERR'
-    })
+    const err = new Error('my error')
+    err.code = 'ERR'
+    got.mockRejectedValue(err)
+
     const Es = require('./elastic-search')
     const config = {
       url: 'http://my-elk.test',
@@ -108,13 +106,7 @@ describe('#Channel - Elastic-search', () => {
       }]
     }
 
-    const expectedResult = [
-      `[ELASTIC-SEARCH REPORT][ERR] - http://my-elk.test - index : my-index-${currentDate}`,
-      `[ELASTIC-SEARCH REPORT][ERR] - http://my-elk.test - index : my-index-${currentDate}`,
-      `[ELASTIC-SEARCH REPORT][ERR] - http://my-elk.test - index : my-index-${currentDate}`
-    ]
-
-    await expect(Es(config, result)).resolves.toEqual(expectedResult)
+    await expect(Es(config, result)).rejects.toThrow(err)
     expect(result.features).toBeUndefined()
     expect(got.mock.calls.length).toBe(3)
   })
@@ -145,11 +137,7 @@ describe('#Channel - Elastic-search', () => {
     const { features } = result
 
     const index = `restqa-e2e-result-${currentDate}`
-    const expectedResult = [
-      `[ELASTIC-SEARCH REPORT][201] - http://my-elk.test - index : ${index}`,
-      `[ELASTIC-SEARCH REPORT][201] - http://my-elk.test - index : ${index}`,
-      `[ELASTIC-SEARCH REPORT][201] - http://my-elk.test - index : ${index}`
-    ]
+    const expectedResult = `[ELASTIC-SEARCH REPORT] - http://my-elk.test - index : ${index}`
 
     await expect(Es(config, result)).resolves.toEqual(expectedResult)
     expect(result.features).toBeUndefined()

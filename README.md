@@ -151,13 +151,11 @@ module.exports = getFormatter(envConfig)
 
 ### Run cucumber-js
 
-You can now run cucumber-js with the just created formater
+You can now run cucumber-js with the just created formatter
 
-`cucumber-js -f ./restqa-formatter.js`
+`cucumber-js -f ./restqa-formatter.js:restqa.log`
 
-
-
-
+> It's important to defined formatter export path to have access the logs, you can refer to the cucumber-js documentation (https://github.com/cucumber/cucumber-js/blob/master/docs/cli.md#formats)'
 
 
 ## License
