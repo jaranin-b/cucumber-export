@@ -1,8 +1,6 @@
 const moment = require('moment')
 
 module.exports = function (metadata, testResult) {
-  console.log(testResult)
-
   const features = testResult.map(feature => {
     const scenarios = feature.elements.map(scenario => {
       scenario.step_passed = scenario.steps.filter(r => r.result.status === 'passed').length

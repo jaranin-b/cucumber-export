@@ -1,4 +1,5 @@
 const got = require('got')
+const Errors = require('../errors')
 const { URL } = require('url')
 
 module.exports = function (config, result) {
@@ -23,8 +24,7 @@ module.exports = function (config, result) {
         resolve(`[HTTP REPORT][${res.statusCode}] - ${config.url}`)
       })
       .catch(err => {
-        // console.log(err)
-        reject(new Error(`[HTTP REPORT][${err.response.statusCode}] - ${config.url} : ${JSON.stringify(err.response.body)}`))
+        reject(new Errors.HTTP('HTTP REPORT', err))
       })
   })
 }
