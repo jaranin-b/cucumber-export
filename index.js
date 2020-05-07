@@ -19,7 +19,8 @@ function getFormatter (config) {
     }
 
     onTestRunFinished (testRunResult) {
-      this.stream.end = async () => {
+      const logFileName = fs.readlinkSync('/proc/self/fd/' + this.stream.fd)
+      process.nextTick(async () => {
         const format = new Transport(config, testRunResult)
         const options = {
           eventDataCollector: this.eventDataCollector,
@@ -56,14 +57,10 @@ function getFormatter (config) {
 
             const errors = response.filter(_ => _.reason)
             if (errors.length) {
-              errors.forEach(err => {
-                const log = [
-                  err.reason.toString(),
-                  '-----------------------------------'
-                ]
-                this.stream.write(log.join('\n'))
+              let logs = errors.map(err => {
+                return err.reason.toString() + '\n\n-------------------------------------------------------------'
               })
-              const logFileName = fs.readlinkSync('/proc/self/fd/' + this.stream.fd)
+              fs.writeFileSync(logFileName, logs.join('\n'))
               process.stdout.write(`\n\n🥺  Find the detail of the errors on the file : ${logFileName}\n`)
             }
 
@@ -73,7 +70,7 @@ function getFormatter (config) {
 
         const jsonResult = new JsonFormatter(options)
         jsonResult.onTestRunFinished()
-      }
+      })
     }
   }
 }
