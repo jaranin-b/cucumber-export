@@ -52,6 +52,12 @@ module.exports = function (metadata, testResult) {
     total: features.length,
     passed: features.filter(r => r.result).length,
     failed: features.filter(r => !r.result).length,
+    scenarios: {
+      passed: features.reduce((total, feature) => total + feature.passed, 0),
+      failed: features.reduce((total, feature) => total + feature.failed, 0),
+      skipped: features.reduce((total, feature) => total + feature.skipped, 0),
+      undefined: features.reduce((total, feature) => total + feature.undefined, 0)
+    },
     features
   }
 

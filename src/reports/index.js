@@ -1,5 +1,6 @@
 module.exports = {
   http: require('./http'),
   'elastic-search': require('./elastic-search'),
-  file: require('./file')
+  file: require('./file'),
+  slack: require('./slack')
 }
