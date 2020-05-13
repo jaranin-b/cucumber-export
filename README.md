@@ -162,6 +162,16 @@ let envConfig = {
       config: {
         path: 'my-report.json' // File to save
       }
+    },
+    {
+      type: 'slack',
+      enabled: true,
+      config: {
+        url: 'https://hooks.slack.com/service/xxx/yyy/zzz', // The slack webhook url
+        onlyFailed: true, // Trigger the hook only for test failure  (default: false)
+        showErrors: true,  // Show the error message within slack
+        reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
+      }
     }
   ]
 }

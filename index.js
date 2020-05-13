@@ -57,7 +57,7 @@ function getFormatter (config) {
 
             const errors = response.filter(_ => _.reason)
             if (errors.length) {
-              let logs = errors.map(err => {
+              const logs = errors.map(err => {
                 return err.reason.toString() + '\n\n-------------------------------------------------------------'
               })
               fs.writeFileSync(logFileName, logs.join('\n'))
