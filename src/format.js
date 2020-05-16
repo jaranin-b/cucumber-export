@@ -48,7 +48,7 @@ module.exports = function (metadata, testResult) {
   const testRun = {
     ...metadata,
     timestamp: moment().format(),
-    type: 'testRun',
+    type: 'testSuite',
     total: features.length,
     passed: features.filter(r => r.result).length,
     failed: features.filter(r => !r.result).length,
