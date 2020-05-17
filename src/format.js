@@ -1,9 +1,8 @@
 const moment = require('moment')
 
 module.exports = function (metadata, testResult) {
-
-  metadata.duration = metadata.duration/ 1e9
-  metadata.durationFormat = moment.utc(metadata.duration/ 1e6).format('mm:ss')
+  metadata.duration = metadata.duration / 1e9
+  metadata.durationFormat = moment.utc(metadata.duration / 1e6).format('mm:ss')
 
   const features = testResult.map(feature => {
     const scenarios = feature.elements.map(scenario => {

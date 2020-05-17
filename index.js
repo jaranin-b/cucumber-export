@@ -69,7 +69,6 @@ function getFormatter (config) {
             }
 
             process.stdout.write('\n')
-
           }
         }
 

@@ -14,7 +14,7 @@ module.exports = function (config, result) {
 
       if (config.onlyFailed === true && result.success === true) return resolve('[SLACK] No Notification is required because eveything is fine :)')
 
-      function getStepsError () {
+      const getStepsError = function () {
         return result
           .features
           .filter(_ => !_.result)
