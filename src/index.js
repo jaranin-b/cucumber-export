@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid')
 const Format = require('./format')
 const Reports = require('./reports')
 
-module.exports = function (config, testRunResult) {
+module.exports = function (config, testSuiteResult) {
   if (!Array.isArray(config.outputs)) {
     throw new Error('The config.outputs needs to be an array')
   }
@@ -17,7 +17,7 @@ module.exports = function (config, testRunResult) {
       name: config.name,
       key: config.key,
       env: config.env,
-      ...testRunResult.result
+      ...testSuiteResult.result
     }
 
     result = Format(metadata, result)

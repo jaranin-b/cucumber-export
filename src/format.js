@@ -1,6 +1,10 @@
 const moment = require('moment')
 
 module.exports = function (metadata, testResult) {
+
+  metadata.duration = metadata.duration/ 1e9
+  metadata.durationFormat = moment.utc(metadata.duration/ 1e6).format('mm:ss')
+
   const features = testResult.map(feature => {
     const scenarios = feature.elements.map(scenario => {
       scenario.step_passed = scenario.steps.filter(r => r.result.status === 'passed').length
@@ -45,7 +49,7 @@ module.exports = function (metadata, testResult) {
     return feature
   })
 
-  const testRun = {
+  const testSuite = {
     ...metadata,
     timestamp: moment().format(),
     type: 'testSuite',
@@ -61,5 +65,5 @@ module.exports = function (metadata, testResult) {
     features
   }
 
-  return testRun
+  return testSuite
 }
