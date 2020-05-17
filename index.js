@@ -62,9 +62,14 @@ function getFormatter (config) {
               })
               fs.writeFileSync(logFileName, logs.join('\n'))
               process.stdout.write(`\n\n🥺  Find the detail of the errors on the file : ${logFileName}\n`)
+
+              if (process.stdout.isTTY) {
+                process.stdout.write(logs.join('\n'))
+              }
             }
 
             process.stdout.write('\n')
+
           }
         }
 
