@@ -44,6 +44,20 @@ describe('#report - SLACK', () => {
     expect(got.mock.calls.length).toBe(0)
   })
 
+  test('Rejected if an issue occured', () => {
+    const Errors = require('../errors')
+
+    const Slack = require('./slack')
+    const config = {
+      url: 'http://my-url.test/report',
+      onlyFailed: false
+    }
+
+    testResult.scenarios = null
+
+    expect(Slack(config, testResult)).rejects.toThrow(new Errors.DEFAULT('SLACK REPORT', new Error('Cannot read property \'passed\' of null')))
+  })
+
   test('Rejected if the request fail', () => {
     const Errors = require('../errors')
     const got = require('got')
