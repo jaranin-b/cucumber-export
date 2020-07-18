@@ -39,7 +39,6 @@ describe('#report - HTTP', () => {
       protocol: 'http:',
       pathname: '/report',
       method: 'POST',
-      responseType: 'json',
       headers: {},
       json: {
         success: true
@@ -79,7 +78,6 @@ describe('#report - HTTP', () => {
       protocol: 'http:',
       pathname: '/report',
       method: 'PUT',
-      responseType: 'json',
       headers: {
         'x-foo': 'bar'
       },

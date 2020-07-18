@@ -15,7 +15,6 @@ module.exports = function (config, result) {
       pathname: url.pathname,
       method: config.method || 'POST',
       headers: config.headers || {},
-      responseType: 'json',
       json: result
     }
 
