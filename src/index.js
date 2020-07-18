@@ -25,7 +25,7 @@ module.exports = function (config, testSuiteResult) {
     const outputs = config.outputs
       .filter(output => output.enabled)
       .map(output => {
-        return Reports[output.type].call(this, output.config, result)
+        return Reports[output.type].call(this, output.config, { ... result })
       })
 
     if (!outputs.length) return
