@@ -58,11 +58,19 @@ module.exports = function (config, result) {
           fields: [
             {
               type: 'mrkdwn',
-              text: `*Environment:* ${result.name}`
+              text: `*Name:* ${result.name}`
             },
             {
               type: 'mrkdwn',
-              text: `*uuid :* ${result.id}`
+              text: `*key:* ${result.key}`
+            },
+            {
+              type: 'mrkdwn',
+              text: `*Environment:* ${result.env}`
+            },
+            {
+              type: 'mrkdwn',
+              text: `*Execution Id :* ${result.id}`
             }
           ]
         },
