@@ -5,6 +5,8 @@ beforeEach(() => {
   testResult = {
     id: 'xxx-yyy-zzz',
     name: 'my test result',
+    env: 'local',
+    key: 'MY-KEY',
     success: true,
     total: 10,
     passed: 10,
@@ -96,11 +98,19 @@ describe('#report - SLACK', () => {
             fields: [
               {
                 type: 'mrkdwn',
-                text: '*Environment:* my test result'
+                text: '*Name:* my test result'
               },
               {
                 type: 'mrkdwn',
-                text: '*uuid :* xxx-yyy-zzz'
+                text: '*key:* MY-KEY'
+              },
+              {
+                type: 'mrkdwn',
+                text: '*Environment:* local'
+              },
+              {
+                type: 'mrkdwn',
+                text: '*Execution Id :* xxx-yyy-zzz'
               }
             ]
           },
@@ -204,11 +214,19 @@ describe('#report - SLACK', () => {
             fields: [
               {
                 type: 'mrkdwn',
-                text: '*Environment:* my test result'
+                text: '*Name:* my test result'
               },
               {
                 type: 'mrkdwn',
-                text: '*uuid :* xxx-yyy-zzz'
+                text: '*key:* MY-KEY'
+              },
+              {
+                type: 'mrkdwn',
+                text: '*Environment:* local'
+              },
+              {
+                type: 'mrkdwn',
+                text: '*Execution Id :* xxx-yyy-zzz'
               }
             ]
           },

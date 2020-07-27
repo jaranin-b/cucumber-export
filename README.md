@@ -121,6 +121,27 @@ Export the result to an elastic search server (using rolling index)
 }
 ```
 
+###### Http html Report
+
+(Note: This modules only exports data to various remote endpoints, it doesn't ge erate any html)
+
+Export the result to a remote endpoint in order to generate an html report.
+
+For more information about the generation of the report you can look at the project : https://github.com/restqa/cucumber-html-reporter-server
+Basically you have 2 options to use this reporter.]:
+1. Use the Saas version hosted on : html-report.restqa.io (pro: ready, con: data privacy, shared)
+2. Host your own, sotfware available here : https://github.com/restqa/cucumber-html-reporter-server
+
+```
+{
+  type: 'http-html-report',
+  enabled: true,
+  config: {
+    url: 'https://html-report.your-domain.dev' // (default : https://html-report.restqa.io)
+  }
+}
+```
+
 ## Usage
 
 ### Setup your formatter
@@ -137,6 +158,13 @@ let envConfig = {
   name: 'local',
   env: 'uat',
   outputs: [
+    {
+      type: 'http-html-report',
+      enabled: true,
+      config: {
+        url: 'https://html-report.your-domain.dev' // (default : https://html-report.restqa.io)
+      }
+    },
     {
       type: 'http',
       enabled: true,
