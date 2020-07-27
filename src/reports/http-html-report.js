@@ -4,7 +4,9 @@ const { URL } = require('url')
 
 module.exports = function (config, result) {
   return new Promise((resolve, reject) => {
-    const url = new URL(config.url || 'https://html-report.restqa.io')
+    config = config || {}
+    config.url = config.url || 'https://html-report.restqa.io'
+    const url = new URL(config.url)
 
     const options = {
       hostname: url.hostname,
@@ -12,14 +14,13 @@ module.exports = function (config, result) {
       protocol: url.protocol,
       pathname: url.pathname,
       method: 'POST',
-      responseType: 'json',
       json: result
 
     }
 
     got(options)
       .then(res => {
-        resolve(`[HTTP HTML REPORT][${res.statusCode}] - Access to your test report : ${res.body.url}`)
+        resolve(`[HTTP HTML REPORT][${res.statusCode}] - Access to your test report : ${config.url + '/' + result.id}`)
       })
       .catch(err => {
         reject(new Errors.HTTP('HTTP HTML REPORT', err))
