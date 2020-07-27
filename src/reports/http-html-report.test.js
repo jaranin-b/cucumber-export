@@ -3,7 +3,6 @@ beforeEach(() => {
 })
 
 describe('#report - HTTP HTML REPORT', () => {
-
   test('Rejected if the request fail', () => {
     const Errors = require('../errors')
     const got = require('got')
@@ -18,7 +17,7 @@ describe('#report - HTTP HTML REPORT', () => {
 
     got.mockRejectedValue(gotError)
 
-    const HttpHtmlReport= require('./http-html-report')
+    const HttpHtmlReport = require('./http-html-report')
     const config = {
       url: 'http://my-url.test/report'
     }
@@ -54,7 +53,7 @@ describe('#report - HTTP HTML REPORT', () => {
 
     const HttpHtmlReport = require('./http-html-report')
     const config = {
-      url: 'http://my-url.test/report',
+      url: 'http://my-url.test/report'
     }
 
     const result = {

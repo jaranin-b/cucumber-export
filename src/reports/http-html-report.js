@@ -4,7 +4,6 @@ const { URL } = require('url')
 
 module.exports = function (config, result) {
   return new Promise((resolve, reject) => {
-
     const url = new URL(config.url || 'https://html-report.restqa.io')
 
     const options = {
@@ -14,7 +13,7 @@ module.exports = function (config, result) {
       pathname: url.pathname,
       method: 'POST',
       responseType: 'json',
-      json: result,
+      json: result
 
     }
 
@@ -27,4 +26,3 @@ module.exports = function (config, result) {
       })
   })
 }
-
