@@ -32,7 +32,6 @@ describe('#report - HTTP HTML REPORT', () => {
       protocol: 'http:',
       pathname: '/report',
       method: 'POST',
-      responseType: 'json',
       json: {
         success: true
       }
@@ -45,10 +44,7 @@ describe('#report - HTTP HTML REPORT', () => {
     const got = require('got')
     jest.mock('got')
     got.mockResolvedValue({
-      statusCode: 201,
-      body: {
-        url: 'http://html-report.local.dev'
-      }
+      statusCode: 201
     })
 
     const HttpHtmlReport = require('./http-html-report')
@@ -57,9 +53,10 @@ describe('#report - HTTP HTML REPORT', () => {
     }
 
     const result = {
+      id: 'qqq-www-eee',
       success: true
     }
-    expect(HttpHtmlReport(config, result)).resolves.toBe('[HTTP HTML REPORT][201] - Access to your test report : http://html-report.local.dev')
+    expect(HttpHtmlReport(config, result)).resolves.toBe('[HTTP HTML REPORT][201] - Access to your test report : http://my-url.test/report/qqq-www-eee')
 
     const expectedOptions = {
       hostname: 'my-url.test',
@@ -67,8 +64,8 @@ describe('#report - HTTP HTML REPORT', () => {
       protocol: 'http:',
       pathname: '/report',
       method: 'POST',
-      responseType: 'json',
       json: {
+        id: 'qqq-www-eee',
         success: true
       }
     }
@@ -80,10 +77,7 @@ describe('#report - HTTP HTML REPORT', () => {
     const got = require('got')
     jest.mock('got')
     got.mockResolvedValue({
-      statusCode: 201,
-      body: {
-        url: 'https://html-report.restqa.io/test'
-      }
+      statusCode: 201
     })
 
     const HttpHtmlReport = require('./http-html-report')
@@ -91,9 +85,10 @@ describe('#report - HTTP HTML REPORT', () => {
     }
 
     const result = {
+      id: 'qqq-www-eee',
       success: true
     }
-    expect(HttpHtmlReport(config, result)).resolves.toBe('[HTTP HTML REPORT][201] - Access to your test report : https://html-report.restqa.io/test')
+    expect(HttpHtmlReport(config, result)).resolves.toBe('[HTTP HTML REPORT][201] - Access to your test report : https://html-report.restqa.io/qqq-www-eee')
 
     const expectedOptions = {
       hostname: 'html-report.restqa.io',
@@ -101,8 +96,8 @@ describe('#report - HTTP HTML REPORT', () => {
       protocol: 'https:',
       pathname: '/',
       method: 'POST',
-      responseType: 'json',
       json: {
+        id: 'qqq-www-eee',
         success: true
       }
     }
