@@ -45,10 +45,14 @@ function getFormatter (config) {
             try {
               result = JSON.parse(result)
               response = await format.exports(result)
+              response = response || []
               inProgress = false
               const stdOut = response.map(_ => {
                 return `\n|=> ${STATUS_ICON[_.status]}  ${(_.status === 'fulfilled') ? 'Successful' : 'Unsuccessful'} export - ${_.value || _.reason.customMsg}`
               })
+              if (!response.length) {
+                stdOut.push('> No exporter configured')
+              }
               process.stdout.write(stdOut.join(''))
             } catch (err) {
               inProgress = false
