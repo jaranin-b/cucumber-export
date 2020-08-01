@@ -142,7 +142,7 @@ Receive a notification on line about you test report
 
 _Example_:
 
-![line notification](https://restqa.io/assets/img/utils/cucumber-export-line.png)
+![line notification](https://restqa.io/assets/img/utils/cucumber-export-line.jpg)
 
 ###### Elastic-Search
 

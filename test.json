@@ -1,0 +1,206 @@
+[
+  {
+    "keyword": "Feature",
+    "name": "As a user i can manage my account",
+    "line": 1,
+    "id": "as-a-user-i-can-manage-my-account",
+    "tags": [],
+    "uri": "features/test.feature",
+    "elements": [
+      {
+        "id": "as-a-user-i-can-manage-my-account;access-to-my-account-from-the-dashboad-page",
+        "keyword": "Scenario",
+        "line": 3,
+        "name": "Access to my account from the dashboad page",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "I have the dashboard page",
+            "match": {
+              "location": "features/setup.js:7"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3011000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 5,
+            "name": "I click on my account",
+            "match": {
+              "location": "features/setup.js:11"
+            },
+            "result": {
+              "status": "failed",
+              "duration": 1000000,
+              "error_message": "Error: The button my button hasn't been found\n    at World.<anonymous> (/usr/src/app/features/setup.js:12:9)"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 6,
+            "name": "The title of the page should be \"My account\"",
+            "match": {
+              "location": "features/setup.js:15"
+            },
+            "result": {
+              "status": "skipped"
+            }
+          }
+        ]
+      },
+      {
+        "id": "as-a-user-i-can-manage-my-account;access-to-my-account-from-the-menu",
+        "keyword": "Scenario",
+        "line": 8,
+        "name": "Access to my account from the menu",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "I have the dashboard page",
+            "match": {
+              "location": "features/setup.js:7"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3003000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 10,
+            "name": "I click on my account",
+            "match": {
+              "location": "features/setup.js:11"
+            },
+            "result": {
+              "status": "failed",
+              "duration": 0,
+              "error_message": "Error: The button my button hasn't been found\n    at World.<anonymous> (/usr/src/app/features/setup.js:12:9)"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 11,
+            "name": "The title of the page should be \"My account\"",
+            "match": {
+              "location": "features/setup.js:15"
+            },
+            "result": {
+              "status": "skipped"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "keyword": "Feature",
+    "name": "As a user i can manage my orders",
+    "line": 1,
+    "id": "as-a-user-i-can-manage-my-orders",
+    "tags": [],
+    "uri": "features/test2.feature",
+    "elements": [
+      {
+        "id": "as-a-user-i-can-manage-my-orders;access-to-my-orders-from-the-dashboad-page",
+        "keyword": "Scenario",
+        "line": 3,
+        "name": "Access to my orders from the dashboad page",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 4,
+            "name": "I have the dashboard page",
+            "match": {
+              "location": "features/setup.js:7"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3006000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 5,
+            "name": "I click on my account",
+            "match": {
+              "location": "features/setup.js:11"
+            },
+            "result": {
+              "status": "failed",
+              "duration": 1000000,
+              "error_message": "Error: The button my button hasn't been found\n    at World.<anonymous> (/usr/src/app/features/setup.js:12:9)"
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 6,
+            "name": "The title of the page should be \"My account\"",
+            "match": {
+              "location": "features/setup.js:15"
+            },
+            "result": {
+              "status": "skipped"
+            }
+          }
+        ]
+      },
+      {
+        "id": "as-a-user-i-can-manage-my-orders;access-to-my-orders-from-the-menu",
+        "keyword": "Scenario",
+        "line": 8,
+        "name": "Access to my orders from the menu",
+        "tags": [],
+        "type": "scenario",
+        "steps": [
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "I have the dashboard page",
+            "match": {
+              "location": "features/setup.js:7"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3005000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 10,
+            "name": "I click on my account",
+            "match": {
+              "location": "features/setup.js:11"
+            },
+            "result": {
+              "status": "failed",
+              "duration": 1000000,
+              "error_message": "Error: The button my button hasn't been found\n    at World.<anonymous> (/usr/src/app/features/setup.js:12:9)"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
