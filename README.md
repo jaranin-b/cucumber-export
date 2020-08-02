@@ -116,9 +116,14 @@ Receive a connector card in your Microsoft Teams channel when your test finishes
   type: 'microsoft-teams',
   enabled: true,
   config: {
-    url: 'https://outlook.office.com/webhook/xxx/IncomingWebhook/yyy/zzz', // The teams webhook url
+    url: 'https://outlook.office.com/webhook/xxx/IncomingWebhook/yyy/zzz', // The teams webhook url (tutorial : https://docs.microsoft.com/en-us/learn/modules/msteams-webhooks-connectors/5-exercise-incoming-webhooks)
     onlyFailed: true, // Trigger the hook only for test failure  (default: false)
     showErrors: true,  // Show the error message within teams
+  }
+}
+```
+
+In order to get the url of the incoming webhook, take a look at : https://docs.microsoft.com/en-us/learn/modules/msteams-webhooks-connectors/5-exercise-incoming-webhooks
 
 _Example_:
 
@@ -133,12 +138,15 @@ Receive a notification on line about you test report
   type: 'line',
   enabled: true,
   config: {
-    token: 'sEdkjfEr745aasd546saSDdjklawE74S', // The line notfication token
+    token: 'sEdkjfEr745aasd546saSDdjklawE74S', // The line notfication token (get your token here : https://notify-bot.line.me/en/)
     onlyFailed: true, // Trigger the hook only for test failure  (default: false)
     reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
   }
 }
 ```
+
+In order to get the token for the nofify line app, take a look at : https://notify-bot.line.me/en/
+
 
 _Example_:
 
