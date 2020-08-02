@@ -1,6 +1,6 @@
 # Cucumber-export
 
-This cucumber formatter works well with cucumber versions from  6.x inclusive
+This cucumber formatter works well with cucumber versions from 6.x inclusive
 
 ## Installation
 
@@ -11,7 +11,7 @@ npm install @restqa/cucumber-export
 ## API
 
 ```js
-const { getFormatter } = require('@restqa/cucumber-export')
+const { getFormatter } = require('@restqa/cucumber-export');
 ```
 
 The `getFormatter` object expose a function receving your exports options.
@@ -19,7 +19,7 @@ All The options are shared below.
 
 ### cucumberExport.getFormatter([options])
 
-Returns a cucumber formatter where the result will be pre-formatted and transferred 
+Returns a cucumber formatter where the result will be pre-formatted and transferred
 to the selected destination.
 
 #### Options
@@ -52,7 +52,7 @@ Represent a environment of the current test suite (example: uat)
 
 ##### outputs \<array> (required)
 
-You can configure different output, the available output reporters are : 
+You can configure different output, the available output reporters are :
 
 ###### File
 
@@ -102,9 +102,31 @@ Receive a notification on slack about you test report
   }
 }
 ```
+
 _Example_:
 
 ![slack notification](https://restqa.io/assets/img/utils/cucumber-export-slack.png)
+
+###### Microsoft Teams
+
+Receive a connector card in your Microsoft Teams channel when your test finishes
+
+```
+{
+  type: 'microsoft-teams',
+  enabled: true,
+  config: {
+    url: 'https://outlook.office.com/webhook/xxx/IncomingWebhook/yyy/zzz', // The teams webhook url
+    onlyFailed: true, // Trigger the hook only for test failure  (default: false)
+    showErrors: true,  // Show the error message within teams
+    reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
+  }
+}
+```
+
+_Example_:
+
+![teams notification](https://restqa.io/assets/img/utils/cucumber-export-teams.png)
 
 ###### Elastic-Search
 
@@ -129,6 +151,7 @@ Export the result to a remote endpoint in order to generate an html report.
 
 For more information about the generation of the report you can look at the project : https://github.com/restqa/cucumber-html-reporter-server
 Basically you have 2 options to use this reporter.]:
+
 1. Use the Saas version hosted on : html-report.restqa.io (pro: ready, con: data privacy, shared)
 2. Host your own, sotfware available here : https://github.com/restqa/cucumber-html-reporter-server
 
@@ -200,6 +223,16 @@ let envConfig = {
         showErrors: true,  // Show the error message within slack
         reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
       }
+    },
+    {
+      type: 'microsoft-teams',
+      enabled: true,
+      config: {
+        url: 'https://outlook.office.com/webhook/xxx/IncomingWebhook/yyy/zzz', // The teams webhook url
+        onlyFailed: true, // Trigger the hook only for test failure  (default: false)
+        showErrors: true,  // Show the error message within teams
+        reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
+      }
     }
   ]
 }
@@ -214,7 +247,6 @@ You can now run cucumber-js with the just created formatter
 `cucumber-js -f ./restqa-formatter.js:restqa.log`
 
 > It's important to defined formatter export path to have access the logs, you can refer to the cucumber-js documentation (https://github.com/cucumber/cucumber-js/blob/master/docs/cli.md#formats)'
-
 
 ## License
 

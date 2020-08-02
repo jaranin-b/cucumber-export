@@ -40,6 +40,10 @@ module.exports = function (config, result) {
                     },
                     {
                       name: 'Error message',
+                      // The formatting for the below value is the 'fix' for a bug in code display
+                      // on the Teams platform. A double newline and double indent will trigger
+                      // a code block that wraps your code rather than letting it overflow off
+                      // the screen.
                       value: `\n\n    ${step.result.error_message.split('\n').join('\n    ')}`
                     }
                   ],
