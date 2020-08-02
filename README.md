@@ -116,17 +116,41 @@ Receive a connector card in your Microsoft Teams channel when your test finishes
   type: 'microsoft-teams',
   enabled: true,
   config: {
-    url: 'https://outlook.office.com/webhook/xxx/IncomingWebhook/yyy/zzz', // The teams webhook url
+    url: 'https://outlook.office.com/webhook/xxx/IncomingWebhook/yyy/zzz', // The teams webhook url (tutorial : https://docs.microsoft.com/en-us/learn/modules/msteams-webhooks-connectors/5-exercise-incoming-webhooks)
     onlyFailed: true, // Trigger the hook only for test failure  (default: false)
     showErrors: true,  // Show the error message within teams
+  }
+}
+```
+
+In order to get the url of the incoming webhook, take a look at : https://docs.microsoft.com/en-us/learn/modules/msteams-webhooks-connectors/5-exercise-incoming-webhooks
+
+_Example_:
+
+![teams notification](https://restqa.io/assets/img/utils/cucumber-export-teams.png)
+
+###### Line
+
+Receive a notification on line about you test report
+
+```
+{
+  type: 'line',
+  enabled: true,
+  config: {
+    token: 'sEdkjfEr745aasd546saSDdjklawE74S', // The line notfication token (get your token here : https://notify-bot.line.me/en/)
+    onlyFailed: true, // Trigger the hook only for test failure  (default: false)
     reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
   }
 }
 ```
 
+In order to get the token for the nofify line app, take a look at : https://notify-bot.line.me/en/
+
+
 _Example_:
 
-![teams notification](https://restqa.io/assets/img/utils/cucumber-export-teams.png)
+![line notification](https://restqa.io/assets/img/utils/cucumber-export-line.jpg)
 
 ###### Elastic-Search
 
@@ -145,7 +169,7 @@ Export the result to an elastic search server (using rolling index)
 
 ###### Http html Report
 
-(Note: This modules only exports data to various remote endpoints, it doesn't ge erate any html)
+(Note: This modules only exports data to various remote endpoints, it doesn't generate any html)
 
 Export the result to a remote endpoint in order to generate an html report.
 
@@ -231,6 +255,15 @@ let envConfig = {
         url: 'https://outlook.office.com/webhook/xxx/IncomingWebhook/yyy/zzz', // The teams webhook url
         onlyFailed: true, // Trigger the hook only for test failure  (default: false)
         showErrors: true,  // Show the error message within teams
+        reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
+      }
+    },
+    {
+      type: 'line',
+      enabled: true,
+      config: {
+        token: 'sEdkjfEr745aasd546saSDdjklawE74S', // The line notfication token
+        onlyFailed: true, // Trigger the hook only for test failure  (default: false)
         reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
       }
     }
