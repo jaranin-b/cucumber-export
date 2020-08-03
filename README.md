@@ -281,6 +281,18 @@ You can now run cucumber-js with the just created formatter
 
 > It's important to defined formatter export path to have access the logs, you can refer to the cucumber-js documentation (https://github.com/cucumber/cucumber-js/blob/master/docs/cli.md#formats)'
 
+### TODO
+
+Creates channels for :
+
+* Mattermost
+* Rocket chat
+* Discord
+* google hangout
+* Prometheus
+* Grafana Loki
+
+
 ## License
 
 [MIT License](./LICENSE)
