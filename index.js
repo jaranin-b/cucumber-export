@@ -1,13 +1,13 @@
-const { JsonFormatter, Formatter } = require('cucumber');
-const argvParser = require('cucumber/lib/cli/argv_parser').default;
-const optionSplitter = require('cucumber/lib/cli/option_splitter').default;
-const Transport = require('./src');
-const fs = require('fs');
+const { JsonFormatter, Formatter } = require('cucumber')
+const argvParser = require('cucumber/lib/cli/argv_parser').default
+const optionSplitter = require('cucumber/lib/cli/option_splitter').default
+const Transport = require('./src')
+const fs = require('fs')
 
-function getFormatter(config) {
+function getFormatter (config) {
   return class RestQaFormatter extends Formatter {
-    constructor(options) {
-      super(options);
+    constructor (options) {
+      super(options)
       if (this.stream.fd === process.stdout.fd) {
         // Stop the process IF the current stream is stdout...
         const errorMessage = [
@@ -17,107 +17,107 @@ function getFormatter(config) {
           this.colorFns.pending(
             '=> Refer at the cucumber-js documentation (https://github.com/cucumber/cucumber-js/blob/master/docs/cli.md#formats)'
           ),
-          '',
-        ];
-        this.log(errorMessage.join('\n'));
-        return;
+          ''
+        ]
+        this.log(errorMessage.join('\n'))
+        return
       }
-      options.eventBroadcaster.on('test-run-finished', this.onTestRunFinished.bind(this));
+      options.eventBroadcaster.on('test-run-finished', this.onTestRunFinished.bind(this))
     }
 
-    getLogPath() {
-      const args = argvParser.parse(process.argv);
+    getLogPath () {
+      const args = argvParser.parse(process.argv)
 
       if (args.options.format && args.options.format.length > 0) {
-        const writeFile = optionSplitter.split(args.options.format[0])[1];
-        return writeFile;
+        const writeFile = optionSplitter.split(args.options.format[0])[1]
+        return writeFile
       }
 
-      return undefined;
+      return undefined
     }
 
-    writeLog(text) {
+    writeLog (text) {
       if (!this.stream.writable) {
-        const writeFile = this.getLogPath();
+        const writeFile = this.getLogPath()
         if (writeFile) {
-          fs.writeFileSync(writeFile, text, 'utf-8');
+          fs.writeFileSync(writeFile, text, 'utf-8')
         }
       } else {
-        this.log(text);
+        this.log(text)
       }
     }
 
-    onTestRunFinished(testRunResult) {
+    onTestRunFinished (testRunResult) {
       process.nextTick(async () => {
-        const format = new Transport(config, testRunResult);
+        const format = new Transport(config, testRunResult)
         const options = {
           eventDataCollector: this.eventDataCollector,
           eventBroadcaster: { on: () => {} },
           log: async (result) => {
             const STATUS_ICON = {
               fulfilled: '✅',
-              rejected: '❌',
-            };
+              rejected: '❌'
+            }
 
-            process.stdout.write('|===> CUCUMBER EXPORT 📦  \n');
+            process.stdout.write('|===> CUCUMBER EXPORT 📦  \n')
 
-            let inProgress = true;
-            let response = [];
+            let inProgress = true
+            let response = []
             const timer = setInterval(() => {
               if (inProgress) {
-                return process.stdout.write('.');
+                return process.stdout.write('.')
               }
-              clearTimeout(timer);
-            }, 100);
+              clearTimeout(timer)
+            }, 100)
 
             try {
-              result = JSON.parse(result);
-              response = await format.exports(result);
-              response = response || [];
-              inProgress = false;
+              result = JSON.parse(result)
+              response = await format.exports(result)
+              response = response || []
+              inProgress = false
               const stdOut = response.map((_) => {
                 return `\n|=> ${STATUS_ICON[_.status]}  ${
                   _.status === 'fulfilled' ? 'Successful' : 'Unsuccessful'
-                } export - ${_.value || _.reason.customMsg}`;
-              });
+                } export - ${_.value || _.reason.customMsg}`
+              })
               if (!response.length) {
-                stdOut.push('> No exporter configured');
+                stdOut.push('> No exporter configured')
               }
-              process.stdout.write(stdOut.join(''));
+              process.stdout.write(stdOut.join(''))
             } catch (err) {
-              inProgress = false;
-              console.log(err); // @TODO : do something here please...
+              inProgress = false
+              console.log(err) // @TODO : do something here please...
             }
 
-            const errors = response.filter((_) => _.reason);
+            const errors = response.filter((_) => _.reason)
             if (errors.length) {
               const logs = errors.map((err) => {
                 return (
                   err.reason.toString() +
                   '\n\n-------------------------------------------------------------'
-                );
-              });
-              this.writeLog(logs.join('\n'));
+                )
+              })
+              this.writeLog(logs.join('\n'))
               process.stdout.write(
                 `\n\n🥺  Find the detail of the errors on the file : ${this.getLogPath()}\n`
-              );
+              )
 
               if (process.stdout.isTTY) {
-                process.stdout.write(logs.join('\n'));
+                process.stdout.write(logs.join('\n'))
               }
             }
 
-            process.stdout.write('\n');
-          },
-        };
+            process.stdout.write('\n')
+          }
+        }
 
-        const jsonResult = new JsonFormatter(options);
-        jsonResult.onTestRunFinished();
-      });
+        const jsonResult = new JsonFormatter(options)
+        jsonResult.onTestRunFinished()
+      })
     }
-  };
+  }
 }
 
 module.exports = {
-  getFormatter,
-};
+  getFormatter
+}
