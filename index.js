@@ -1,5 +1,6 @@
 const { JsonFormatter, Formatter } = require('cucumber');
 const argvParser = require('cucumber/lib/cli/argv_parser').default;
+const optionSplitter = require('cucumber/lib/cli/option_splitter').default;
 const Transport = require('./src');
 const fs = require('fs');
 
@@ -28,7 +29,7 @@ function getFormatter(config) {
       const args = argvParser.parse(process.argv);
 
       if (args.options.format && args.options.format.length > 0) {
-        const writeFile = args.options.format[0].split(':').slice(1).join(':');
+        const writeFile = optionSplitter.split(args.options.format[0])[1];
         return writeFile;
       }
 
