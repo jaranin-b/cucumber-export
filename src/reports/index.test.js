@@ -1,7 +1,7 @@
 describe('#services - Channels', () => {
   test('init module', () => {
     const index = require('./index')
-    expect(Object.keys(index).length).toEqual(7)
+    expect(Object.keys(index).length).toEqual(8)
     expect(Object.keys(index)).toEqual([
       'http',
       'http-html-report',
@@ -9,6 +9,7 @@ describe('#services - Channels', () => {
       'file',
       'slack',
       'microsoft-teams',
+      'discord',
       'line'
     ])
   })

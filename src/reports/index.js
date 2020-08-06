@@ -5,5 +5,6 @@ module.exports = {
   file: require('./file'),
   slack: require('./slack'),
   'microsoft-teams': require('./microsoft-teams'),
+  discord: require('./discord'),
   line: require('./line')
 }
