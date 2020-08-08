@@ -131,18 +131,18 @@ _Example_:
 
 ###### Discord
 
-Receive a message in your Discord channel when your test finishes via webhook. See how to set up the webhook bot here: 
+Receive a message in your Discord channel when your test finishes via webhook. See how to set up the webhook bot here:
 
 ```
 {
   type: 'discord',
   enabled: true,
   config: {
-    url: 'https://discordapp.com/api/webhooks/111111111111111/abc-def_ghijklmnopqrstxyz', // The discord webhook url
+    url: 'https://discordapp.com/api/webhooks/xxx/yyy', // The discord webhook url
     onlyFailed: false, // Trigger the hook only for test failure  (default: false)
     showErrors: true,  // Show the error message within slack
     reportUrl: 'https://www.test.report/{uuid}', // The url to access to your detail test report if you have one,
-    tts: false, // enable TTS for the message false by default
+    tts: false, // enable TTS for the message, false by default
     username: 'bot-name' //  alternative name for bot, uses the name it has in discord UI by default if nothing specified
   }
 }
@@ -169,7 +169,6 @@ Receive a notification on line about you test report
 ```
 
 In order to get the token for the nofify line app, take a look at : https://notify-bot.line.me/en/
-
 
 _Example_:
 
@@ -289,6 +288,18 @@ let envConfig = {
         onlyFailed: true, // Trigger the hook only for test failure  (default: false)
         reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
       }
+    },
+    {
+      type: 'discord',
+      enabled: true,
+      config: {
+        url: 'https://discordapp.com/api/webhooks/xxx/yyy', // The discord webhook url
+        onlyFailed: false, // Trigger the hook only for test failure  (default: false)
+        showErrors: true,  // Show the error message within slack
+        reportUrl: 'https://www.test.report/{uuid}', // The url to access to your detail test report if you have one,
+        tts: false, // enable TTS for the message, false by default
+        username: 'bot-name' //  alternative name for bot, uses the name it has in discord UI by default if nothing specified
+      }
     }
   ]
 }
@@ -306,15 +317,13 @@ You can now run cucumber-js with the just created formatter
 
 ### TODO
 
-Creates channels for :
+Create channels for :
 
-* Mattermost
-* Rocket chat
-* Discord
-* google hangout
-* Prometheus
-* Grafana Loki
-
+- Mattermost
+- Rocket chat
+- Google Hangouts
+- Prometheus
+- Grafana Loki
 
 ## License
 
