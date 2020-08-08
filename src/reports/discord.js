@@ -28,7 +28,7 @@ module.exports = function (config, result) {
                 const step = scenario.steps.find((_) => _.result.status === 'failed')
                 if (!step) return
                 return {
-                  name: `📕 **Feature**: ${feature.feature_name}`.slice(0, 256),
+                  name: `📕 **Feature**: ${feature.feature_name}`.slice(0, 256), // Discord supports up to 256 charcters in field name
                   value: [
                     `**Scenario**: ${scenario.name}`,
                     `**Failed step**: ${step.keyword} ${step.name} (Line ${step.line})`,
@@ -36,7 +36,7 @@ module.exports = function (config, result) {
                     '----'
                   ]
                     .join('\n')
-                    .slice(0, 2048)
+                    .slice(0, 1024) // Discord supports up to 1024 characters in field value
                 }
               })
               .filter((_) => _)
