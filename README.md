@@ -129,6 +129,29 @@ _Example_:
 
 ![teams notification](https://restqa.io/assets/img/utils/cucumber-export-teams.png)
 
+###### Discord
+
+Receive a message in your Discord channel when your test finishes via webhook. See how to set up the webhook bot here: 
+
+```
+{
+  type: 'discord',
+  enabled: true,
+  config: {
+    url: 'https://discordapp.com/api/webhooks/111111111111111/abc-def_ghijklmnopqrstxyz', // The discord webhook url
+    onlyFailed: false, // Trigger the hook only for test failure  (default: false)
+    showErrors: true,  // Show the error message within slack
+    reportUrl: 'https://www.test.report/{uuid}', // The url to access to your detail test report if you have one,
+    tts: false, // enable TTS for the message false by default
+    username: 'bot-name' //  alternative name for bot, uses the name it has in discord UI by default if nothing specified
+  }
+}
+```
+
+_Example_:
+
+![discord notification](https://restqa.io/assets/img/utils/cucumber-export-discord.png)
+
 ###### Line
 
 Receive a notification on line about you test report
