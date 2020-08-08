@@ -68,7 +68,7 @@ module.exports = function (config, result) {
         }
 
       if (config.showErrors) {
-        embed.fields = getStepsErrors();
+        embed.fields = getStepsError();
       }
 
       if (config.reportUrl) {

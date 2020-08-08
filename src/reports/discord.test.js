@@ -42,7 +42,7 @@ describe('#report - DISCORD', () => {
       success: true
     }
 
-    expect(Discord(config, result)).resolves.toBe('[DISCORD] No Notification is required because eveything is fine :)')
+    expect(Discord(config, result)).resolves.toBe('[DISCORD] No notification is required because eveything is fine :)')
     expect(got.mock.calls.length).toBe(0)
   })
 
@@ -82,213 +82,132 @@ describe('#report - DISCORD', () => {
 
     expect(Discord(config, testResult)).rejects.toThrow(new Errors.HTTP('DISCORD REPORT', gotError))
 
-    const slackExpect = {
-      attachments: [{
-        color: '#007a5a',
-        blocks: [
-          {
-            type: 'section',
-            text: {
-              type: 'mrkdwn',
-              text: 'The test suite *Passed (10/10)*'
-            }
-          },
-          {
-            type: 'section',
-            fields: [
-              {
-                type: 'mrkdwn',
-                text: '*Name:* my test result'
-              },
-              {
-                type: 'mrkdwn',
-                text: '*key:* MY-KEY'
-              },
-              {
-                type: 'mrkdwn',
-                text: '*Environment:* local'
-              },
-              {
-                type: 'mrkdwn',
-                text: '*Execution Id :* xxx-yyy-zzz'
-              }
-            ]
-          },
-          {
-            type: 'section',
-            text: {
-              type: 'mrkdwn',
-              text: '*Scenarios:* \n *  Passed: 50 \n *  Failed: 0 \n *  Skipped: 10 \n * Undefined: 0'
-            },
-            accessory: {
-              type: 'image',
-              image_url: 'https://restqa.io/assets/img/utils/restqa-logo-passed.png',
-              alt_text: 'status'
-            }
-          },
-          {
-            type: 'context',
-            elements: [
-              {
-                type: 'mrkdwn',
-                text: '*Powered By:*'
-              },
-              {
-                type: 'mrkdwn',
-                text: '<https://restqa.io|@restqa>'
-              }
-            ]
-          }
-        ]
-      }]
+    const discordExpect = {
+      username: null,
+      tts: false,
+      embeds:[{
+        title: "The test suite **passed (10/10)**",
+        description:
+          '\n          ' +
+          '**Name:** my test result\n          ' +
+          '**Key:** MY-KEY\n          ' +
+          '**Environment:** local\n          ' +
+          '**Execution Id:** xxx-yyy-zzz\n\n          ' +
+          '**Scenarios:**\n          ' +
+          '- **Passed:** 50\n          ' +
+          '- **Failed:** 0\n          ' +
+          '- **Skipped:** 10\n          ' +
+          '- **Undefined:** 0\n\n          ' +
+          '*Powered By:* [@restqa](https://restqa.io)\n          ',
+        thumbnail:{
+          url:"https://restqa.io/assets/img/utils/restqa-logo-passed.png"
+        },
+        color: 31322
+    }]
+  }
 
+    const expectedOptions = {
+      hostname: 'my-url.test',
+      port: '',
+      protocol: 'http:',
+      pathname: '/report',
+      method: 'POST',
+      body: JSON.stringify(discordExpect),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     }
 
-  //   const expectedOptions = {
-  //     hostname: 'my-url.test',
-  //     port: '',
-  //     protocol: 'http:',
-  //     pathname: '/report',
-  //     method: 'POST',
-  //     body: JSON.stringify(slackExpect)
-  //   }
-  //   expect(got.mock.calls.length).toBe(1)
-  //   expect(got.mock.calls[0][0]).toEqual(expectedOptions)
-  // })
+    expect(got.mock.calls.length).toBe(1)
+    expect(got.mock.calls[0][0]).toEqual(expectedOptions)
+  })
 
-  // test('Success case with config.showError = true, and report link)', () => {
-  //   const got = require('got')
-  //   jest.mock('got')
-  //   got.mockResolvedValue({
-  //     statusCode: 201,
-  //     body: {
-  //       result: 'ok'
-  //     }
-  //   })
+  test('Success case with config.showError = true, and report link)', () => {
+    const got = require('got')
+    jest.mock('got')
+    got.mockResolvedValue({
+      statusCode: 201,
+      body: {
+        result: 'ok'
+      }
+    })
 
-  //   const Slack = require('./slack')
+    const Discord = require('./discord')
 
-  //   const config = {
-  //     url: 'http://my-url.test/report',
-  //     onlyFailed: false,
-  //     showErrors: true,
-  //     reportUrl: 'http://url-of-the-report/{uuid}'
-  //   }
+    const config = {
+      url: 'http://my-url.test/report',
+      onlyFailed: false,
+      showErrors: true,
+      reportUrl: 'http://url-of-the-report/{uuid}'
+    }
 
-  //   testResult.success = false
-  //   testResult.passed = 9
-  //   testResult.failed = 1
-  //   testResult.scenarios.passed = 49
-  //   testResult.scenarios.failed = 1
-  //   testResult.features = [{
-  //     feature_name: 'Feature name',
-  //     elements: [{
-  //       name: 'This is scenario name',
-  //       steps: [{
-  //         keyword: 'When',
-  //         name: 'i have an issue',
-  //         line: 45,
-  //         result: {
-  //           status: 'failed',
-  //           error_message: 'Not working'
-  //         }
-  //       }]
-  //     }]
-  //   }]
+    testResult.success = false
+    testResult.passed = 9
+    testResult.failed = 1
+    testResult.scenarios.passed = 49
+    testResult.scenarios.failed = 1
+    testResult.features = [{
+      feature_name: 'Feature name',
+      elements: [{
+        name: 'This is scenario name',
+        steps: [{
+          keyword: 'When',
+          name: 'i have an issue',
+          line: 45,
+          result: {
+            status: 'failed',
+            error_message: 'Not working'
+          }
+        }]
+      }]
+    }]
 
-  //   expect(Slack(config, testResult)).resolves.toBe('[SLACK REPORT][201] - http://my-url.test/report')
+    expect(Discord(config, testResult)).resolves.toBe('[DISCORD REPORT][201] - http://my-url.test/report')
 
-  //   const slackExpect = {
-  //     attachments: [{
-  //       color: '#ff0000',
-  //       blocks: [
-  //         {
-  //           type: 'section',
-  //           text: {
-  //             type: 'mrkdwn',
-  //             text: 'The test suite *Failed (9/10)*'
-  //           }
-  //         },
-  //         {
-  //           type: 'section',
-  //           fields: [
-  //             {
-  //               type: 'mrkdwn',
-  //               text: '*Name:* my test result'
-  //             },
-  //             {
-  //               type: 'mrkdwn',
-  //               text: '*key:* MY-KEY'
-  //             },
-  //             {
-  //               type: 'mrkdwn',
-  //               text: '*Environment:* local'
-  //             },
-  //             {
-  //               type: 'mrkdwn',
-  //               text: '*Execution Id :* xxx-yyy-zzz'
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           type: 'section',
-  //           text: {
-  //             type: 'mrkdwn',
-  //             text: '*Scenarios:* \n *  Passed: 49 \n *  Failed: 1 \n *  Skipped: 10 \n * Undefined: 0'
-  //           },
-  //           accessory: {
-  //             type: 'image',
-  //             image_url: 'https://restqa.io/assets/img/utils/restqa-logo-failed.png',
-  //             alt_text: 'status'
-  //           }
-  //         },
-  //         {
-  //           type: 'context',
-  //           elements: [
-  //             {
-  //               type: 'mrkdwn',
-  //               text: '*Powered By:*'
-  //             },
-  //             {
-  //               type: 'mrkdwn',
-  //               text: '<https://restqa.io|@restqa>'
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           type: 'section',
-  //           text: {
-  //             type: 'mrkdwn',
-  //             text: [
-  //               '📕 *Feature*: Feature name',
-  //               '*Scenario*: This is scenario name',
-  //               '*Failed step*: When i have an issue (Line 45)',
-  //               '``` Not working ```',
-  //               '----'
-  //             ].join('\n')
-  //           }
-  //         },
-  //         {
-  //           type: 'section',
-  //           text: {
-  //             type: 'mrkdwn',
-  //             text: '📊  <http://url-of-the-report/xxx-yyy-zzz|Acccess to the Test report>'
-  //           }
-  //         }
-  //       ]
-  //     }]
+    const discordExpect = {
+      username: null,
+      tts: false,
+      embeds:[{
+        title: "The test suite **failed (9/10)**",
+        description:
+          '[**📊 Access to Test Report**](http://url-of-the-report/xxx-yyy-zzz)\n\n          ' +
+          '**Name:** my test result\n          ' +
+          '**Key:** MY-KEY\n          ' +
+          '**Environment:** local\n          ' +
+          '**Execution Id:** xxx-yyy-zzz\n\n          ' +
+          '**Scenarios:**\n          ' +
+          '- **Passed:** 49\n          ' +
+          '- **Failed:** 1\n          ' +
+          '- **Skipped:** 10\n          ' +
+          '- **Undefined:** 0\n\n          ' +
+          '*Powered By:* [@restqa](https://restqa.io)\n          ',
+        thumbnail:{
+          url:"https://restqa.io/assets/img/utils/restqa-logo-failed.png"
+        },
+        color: 16711680,
+        fields:[{
+          name: '📕 **Feature**: Feature name',
+          value: 
+            '**Scenario**: This is scenario name\n' + 
+            '**Failed step**: When i have an issue (Line 45)\n' +
+            '``` Not working ```\n----'
+        }],
+        url: 'http://url-of-the-report/xxx-yyy-zzz'
+      }]
+    }
 
-  //   }
-
-  //   const expectedOptions = {
-  //     hostname: 'my-url.test',
-  //     port: '',
-  //     protocol: 'http:',
-  //     pathname: '/report',
-  //     method: 'POST',
-  //     body: JSON.stringify(slackExpect)
-  //   }
-  //   expect(got.mock.calls.length).toBe(1)
-  //   expect(got.mock.calls[0][0]).toEqual(expectedOptions)
-  // })
+    const expectedOptions = {
+      hostname: 'my-url.test',
+      port: '',
+      protocol: 'http:',
+      pathname: '/report',
+      method: 'POST',
+      body: JSON.stringify(discordExpect),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    expect(got.mock.calls.length).toBe(1)
+    expect(got.mock.calls[0][0]).toEqual(expectedOptions)
+  })
 })
