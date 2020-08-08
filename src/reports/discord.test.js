@@ -21,11 +21,13 @@ beforeEach(() => {
 })
 
 describe('#report - DISCORD', () => {
-  test('Rejected if the config doesn\'t contain the url', () => {
+  test("Rejected if the config doesn't contain the url", () => {
     const Discord = require('./discord')
     const config = {}
     const result = {}
-    expect(Discord(config, result)).rejects.toThrow(new Error('config.url is required for the "discord" report'))
+    expect(Discord(config, result)).rejects.toThrow(
+      new Error('config.url is required for the "discord" report')
+    )
   })
 
   test('Resolved if the config only specify notification for failure', () => {
@@ -42,7 +44,9 @@ describe('#report - DISCORD', () => {
       success: true
     }
 
-    expect(Discord(config, result)).resolves.toBe('[DISCORD] No notification is required because eveything is fine :)')
+    expect(Discord(config, result)).resolves.toBe(
+      '[DISCORD] No notification is required because eveything is fine :)'
+    )
     expect(got.mock.calls.length).toBe(0)
   })
 
@@ -57,7 +61,9 @@ describe('#report - DISCORD', () => {
 
     testResult.scenarios = null
 
-    expect(Discord(config, testResult)).rejects.toThrow(new Errors.DEFAULT('DISCORD REPORT', new Error('Cannot read property \'passed\' of null')))
+    expect(Discord(config, testResult)).rejects.toThrow(
+      new Errors.DEFAULT('DISCORD REPORT', new Error("Cannot read property 'passed' of null"))
+    )
   })
 
   test('Rejected if the request fail', () => {
@@ -80,31 +86,35 @@ describe('#report - DISCORD', () => {
       onlyFailed: false
     }
 
-    expect(Discord(config, testResult)).rejects.toThrow(new Errors.HTTP('DISCORD REPORT', gotError))
+    expect(Discord(config, testResult)).rejects.toThrow(
+      new Errors.HTTP('DISCORD REPORT', gotError)
+    )
 
     const discordExpect = {
       username: null,
       tts: false,
-      embeds:[{
-        title: "The test suite **passed (10/10)**",
-        description:
-          '\n          ' +
-          '**Name:** my test result\n          ' +
-          '**Key:** MY-KEY\n          ' +
-          '**Environment:** local\n          ' +
-          '**Execution Id:** xxx-yyy-zzz\n\n          ' +
-          '**Scenarios:**\n          ' +
-          '- **Passed:** 50\n          ' +
-          '- **Failed:** 0\n          ' +
-          '- **Skipped:** 10\n          ' +
-          '- **Undefined:** 0\n\n          ' +
-          '*Powered By:* [@restqa](https://restqa.io)\n          ',
-        thumbnail:{
-          url:"https://restqa.io/assets/img/utils/restqa-logo-passed.png"
-        },
-        color: 31322
-    }]
-  }
+      embeds: [
+        {
+          title: 'The test suite **passed (10/10)**',
+          description: `**Name:** my test result
+**Key:** MY-KEY
+**Environment:** local
+**Execution Id:** xxx-yyy-zzz
+
+**Scenarios:**
+- **Passed:** 50
+- **Failed:** 0
+- **Skipped:** 10
+- **Undefined:** 0
+
+*Powered By:* [@restqa](https://restqa.io)`,
+          thumbnail: {
+            url: 'https://restqa.io/assets/img/utils/restqa-logo-passed.png'
+          },
+          color: 31322
+        }
+      ]
+    }
 
     const expectedOptions = {
       hostname: 'my-url.test',
@@ -146,54 +156,67 @@ describe('#report - DISCORD', () => {
     testResult.failed = 1
     testResult.scenarios.passed = 49
     testResult.scenarios.failed = 1
-    testResult.features = [{
-      feature_name: 'Feature name',
-      elements: [{
-        name: 'This is scenario name',
-        steps: [{
-          keyword: 'When',
-          name: 'i have an issue',
-          line: 45,
-          result: {
-            status: 'failed',
-            error_message: 'Not working'
+    testResult.features = [
+      {
+        feature_name: 'Feature name',
+        elements: [
+          {
+            name: 'This is scenario name',
+            steps: [
+              {
+                keyword: 'When',
+                name: 'i have an issue',
+                line: 45,
+                result: {
+                  status: 'failed',
+                  error_message: 'Not working'
+                }
+              }
+            ]
           }
-        }]
-      }]
-    }]
+        ]
+      }
+    ]
 
-    expect(Discord(config, testResult)).resolves.toBe('[DISCORD REPORT][201] - http://my-url.test/report')
+    expect(Discord(config, testResult)).resolves.toBe(
+      '[DISCORD REPORT][201] - http://my-url.test/report'
+    )
 
     const discordExpect = {
       username: null,
       tts: false,
-      embeds:[{
-        title: "The test suite **failed (9/10)**",
-        description:
-          '[**📊 Access to Test Report**](http://url-of-the-report/xxx-yyy-zzz)\n\n          ' +
-          '**Name:** my test result\n          ' +
-          '**Key:** MY-KEY\n          ' +
-          '**Environment:** local\n          ' +
-          '**Execution Id:** xxx-yyy-zzz\n\n          ' +
-          '**Scenarios:**\n          ' +
-          '- **Passed:** 49\n          ' +
-          '- **Failed:** 1\n          ' +
-          '- **Skipped:** 10\n          ' +
-          '- **Undefined:** 0\n\n          ' +
-          '*Powered By:* [@restqa](https://restqa.io)\n          ',
-        thumbnail:{
-          url:"https://restqa.io/assets/img/utils/restqa-logo-failed.png"
-        },
-        color: 16711680,
-        fields:[{
-          name: '📕 **Feature**: Feature name',
-          value: 
-            '**Scenario**: This is scenario name\n' + 
-            '**Failed step**: When i have an issue (Line 45)\n' +
-            '``` Not working ```\n----'
-        }],
-        url: 'http://url-of-the-report/xxx-yyy-zzz'
-      }]
+      embeds: [
+        {
+          title: 'The test suite **failed (9/10)**',
+          description: `[**📊 View test report**](http://url-of-the-report/xxx-yyy-zzz)
+**Name:** my test result
+**Key:** MY-KEY
+**Environment:** local
+**Execution Id:** xxx-yyy-zzz
+
+**Scenarios:**
+- **Passed:** 49
+- **Failed:** 1
+- **Skipped:** 10
+- **Undefined:** 0
+
+*Powered By:* [@restqa](https://restqa.io)`,
+          thumbnail: {
+            url: 'https://restqa.io/assets/img/utils/restqa-logo-failed.png'
+          },
+          color: 16711680,
+          fields: [
+            {
+              name: '📕 **Feature**: Feature name',
+              value: `**Scenario**: This is scenario name
+**Failed step**: When i have an issue (Line 45)
+${'```'} Not working ${'```'}
+----`
+            }
+          ],
+          url: 'http://url-of-the-report/xxx-yyy-zzz'
+        }
+      ]
     }
 
     const expectedOptions = {

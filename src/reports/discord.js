@@ -8,78 +8,80 @@ module.exports = function (config, result) {
         config.onlyFailed = true
       }
 
-      if (!config.url) { return reject(new Error('config.url is required for the "discord" report')) }
+      if (!config.url) {
+        return reject(new Error('config.url is required for the "discord" report'))
+      }
 
       const url = new URL(config.url)
 
       if (config.onlyFailed === true && result.success === true) {
-        return resolve(
-          '[DISCORD] No notification is required because eveything is fine :)'
-        )
+        return resolve('[DISCORD] No notification is required because eveything is fine :)')
       }
 
       const getStepsError = function () {
-        return result
-          .features
-          .filter(_ => !_.result)
-          .map(feature => {
-            return feature
-              .elements
-              .filter(_ => !_.result)
-              .map(scenario => {
-                const step = scenario.steps.find(_ => _.result.status === 'failed')
+        return result.features
+          .filter((_) => !_.result)
+          .map((feature) => {
+            return feature.elements
+              .filter((_) => !_.result)
+              .map((scenario) => {
+                const step = scenario.steps.find((_) => _.result.status === 'failed')
                 if (!step) return
                 return {
                   name: `📕 **Feature**: ${feature.feature_name}`.slice(0, 256),
                   value: [
-                      `**Scenario**: ${scenario.name}`,
-                      `**Failed step**: ${step.keyword} ${step.name} (Line ${step.line})`,
-                      `\`\`\` ${step.result.error_message} \`\`\``,
-                      '----'
-                    ].join('\n').slice(0, 2048)
+                    `**Scenario**: ${scenario.name}`,
+                    `**Failed step**: ${step.keyword} ${step.name} (Line ${step.line})`,
+                    `\`\`\` ${step.result.error_message} \`\`\``,
+                    '----'
+                  ]
+                    .join('\n')
+                    .slice(0, 2048)
                 }
               })
-              .filter(_ => _)
+              .filter((_) => _)
           })
-          .flat().slice(0, 25)
+          .flat()
+          .slice(0, 25) // Discord supports up to 25 embeds field, need to truncate after
       }
 
       const status = result.success ? 'passed' : 'failed'
-      let embed = {
-          title: `The test suite **${status} (${result.passed}/${result.total})**`,
-          description: `
-          **Name:** ${result.name}
-          **Key:** ${result.key || ''}
-          **Environment:** ${result.env}
-          **Execution Id:** ${result.id}
+      const embed = {
+        title: `The test suite **${status} (${result.passed}/${result.total})**`,
+        description: `**Name:** ${result.name}
+**Key:** ${result.key || ''}
+**Environment:** ${result.env}
+**Execution Id:** ${result.id}
 
-          **Scenarios:**
-          - **Passed:** ${result.scenarios.passed}
-          - **Failed:** ${result.scenarios.failed}
-          - **Skipped:** ${result.scenarios.skipped}
-          - **Undefined:** ${result.scenarios.undefined}
+**Scenarios:**
+- **Passed:** ${result.scenarios.passed}
+- **Failed:** ${result.scenarios.failed}
+- **Skipped:** ${result.scenarios.skipped}
+- **Undefined:** ${result.scenarios.undefined}
 
-          *Powered By:* [@restqa](https://restqa.io)
-          `.slice(0, 2048),
-          thumbnail: {
-            url: `https://restqa.io/assets/img/utils/restqa-logo-${status.toLowerCase()}.png`,
-          },
-          color: result.success ? 31322 : 16711680,
-        }
+*Powered By:* [@restqa](https://restqa.io)`.slice(0, 2048), // Discord supports up to 2048 characters in embeds description
+        thumbnail: {
+          url: `https://restqa.io/assets/img/utils/restqa-logo-${status.toLowerCase()}.png`
+        },
+        color: result.success ? 31322 : 16711680
+      }
 
       if (config.showErrors) {
-        embed.fields = getStepsError();
+        embed.fields = getStepsError()
       }
 
       if (config.reportUrl) {
-        embed.url = config.reportUrl.replace('{uuid}', result.id);
-        embed.description = `[**📊 Access to Test Report**](${config.reportUrl.replace('{uuid}', result.id)})\n`.concat(embed.description);
+        embed.url = config.reportUrl.replace('{uuid}', result.id)
+        embed.description = `[**📊 View test report**](${config.reportUrl.replace(
+          '{uuid}',
+          result.id
+        )})\n`.concat(embed.description)
       }
 
       const data = {
         username: config.username || null,
         tts: config.tts || false,
-        embeds: [embed],
+        embeds: [embed]
       }
 
       const options = {
@@ -90,8 +92,8 @@ module.exports = function (config, result) {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
-          'Content-Type': `application/json`
-        },
+          'Content-Type': 'application/json'
+        }
       }
 
       got(options)
