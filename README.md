@@ -1,6 +1,6 @@
 # Cucumber-export
 
-This cucumber formatter works well with cucumber versions from  6.x inclusive
+This cucumber formatter works well with cucumber versions from 6.x inclusive
 
 ## Installation
 
@@ -11,7 +11,7 @@ npm install @restqa/cucumber-export
 ## API
 
 ```js
-const { getFormatter } = require('@restqa/cucumber-export')
+const { getFormatter } = require('@restqa/cucumber-export');
 ```
 
 The `getFormatter` object expose a function receving your exports options.
@@ -19,7 +19,7 @@ All The options are shared below.
 
 ### cucumberExport.getFormatter([options])
 
-Returns a cucumber formatter where the result will be pre-formatted and transferred 
+Returns a cucumber formatter where the result will be pre-formatted and transferred
 to the selected destination.
 
 #### Options
@@ -52,7 +52,7 @@ Represent a environment of the current test suite (example: uat)
 
 ##### outputs \<array> (required)
 
-You can configure different output, the available output reporters are : 
+You can configure different output, the available output reporters are :
 
 ###### File
 
@@ -102,9 +102,117 @@ Receive a notification on slack about you test report
   }
 }
 ```
+
 _Example_:
 
 ![slack notification](https://restqa.io/assets/img/utils/cucumber-export-slack.png)
+
+###### Microsoft Teams
+
+Receive a connector card in your Microsoft Teams channel when your test finishes
+
+```
+{
+  type: 'microsoft-teams',
+  enabled: true,
+  config: {
+    url: 'https://outlook.office.com/webhook/xxx/IncomingWebhook/yyy/zzz', // The teams webhook url (tutorial : https://docs.microsoft.com/en-us/learn/modules/msteams-webhooks-connectors/5-exercise-incoming-webhooks)
+    onlyFailed: true, // Trigger the hook only for test failure  (default: false)
+    showErrors: true,  // Show the error message within teams
+  }
+}
+```
+
+In order to get the url of the incoming webhook, take a look at : https://docs.microsoft.com/en-us/learn/modules/msteams-webhooks-connectors/5-exercise-incoming-webhooks
+
+_Example_:
+
+![teams notification](https://restqa.io/assets/img/utils/cucumber-export-teams.png)
+
+###### Discord
+
+Receive a message in your Discord channel when your test finishes via webhook. See how to set up the webhook bot here:
+
+```
+{
+  type: 'discord',
+  enabled: true,
+  config: {
+    url: 'https://discordapp.com/api/webhooks/xxx/yyy', // The discord webhook url
+    onlyFailed: false, // Trigger the hook only for test failure  (default: false)
+    showErrors: true,  // Show the error message within slack
+    reportUrl: 'https://www.test.report/{uuid}', // The url to access to your detail test report if you have one,
+    tts: false, // enable TTS for the message, false by default
+    username: 'bot-name' //  alternative name for bot, uses the name it has in discord UI by default if nothing specified
+  }
+}
+```
+
+_Example_:
+
+![discord notification](https://restqa.io/assets/img/utils/cucumber-export-discord.png)
+
+###### Line
+
+Receive a notification on line about you test report
+
+```
+{
+  type: 'line',
+  enabled: true,
+  config: {
+    token: 'sEdkjfEr745aasd546saSDdjklawE74S', // The line notfication token (get your token here : https://notify-bot.line.me/en/)
+    onlyFailed: true, // Trigger the hook only for test failure  (default: false)
+    reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
+  }
+}
+```
+
+In order to get the token for the nofify line app, take a look at : https://notify-bot.line.me/en/
+
+_Example_:
+
+![line notification](https://restqa.io/assets/img/utils/cucumber-export-line.jpg)
+
+###### Mattermost
+
+Receive a notification in your Mattermost channel when your test finishes
+
+```
+{
+  type: 'mattermost',
+  enabled: true,
+  config: {
+    url: 'https://your-mattermost-url/webhooks/xxx',
+    onlyFailed: true // Trigger the hook only for test failure  (default: false),
+    showErrors: true // Show the error message within Mattermost,
+    reportUrl: 'https://www.test.report/{uuid}', // The url to access to your detail test report if you have one
+    channel: 'town-square', // The channel to send messages to
+    username: 'restqa-formatter', // Username to post as (only works if bot is allowed to change its name)
+    iconUrl: '', // Link to bot profile picture (only works if bot is allowed to change image)
+    iconEmoji: 'laughing',  // An emoji tag without the ':'s for bot profile picture (only works if bot is allowed to change image)
+    displayedErrorsLimit: 25, // Limit the number of errors displayed in one message
+  }
+}
+```
+
+To personalise the bot, note the following from: https://docs.mattermost.com/developer/webhooks-incoming.html
+
+> Enable integrations to override usernames must be set to true in config.json to override
+> usernames. Enable them from System Console > Integrations > Custom Integrations in prior
+> versions or System Console > Integrations > Integration Management in versions after 5.12 or
+> ask your System Administrator to do so. If not enabled, the username is set to webhook.
+>
+> Similarly, Enable integrations to override profile picture icons must be set to true in
+> config.json to override profile picture icons. Enable them from
+> System Console > Integrations > Custom Integrations in prior versions or
+> System Console > Integrations > Integration Management in versions after 5.12 or ask your
+> System Administrator to do so. If not enabled, the icon of the creator of the webhook URL is
+> used to post messages.
+
+_Example_:
+
+![Mattermost notification](https://restqa.io/assets/img/utils/cucumber-export-mattermost.png)
 
 ###### Elastic-Search
 
@@ -123,12 +231,13 @@ Export the result to an elastic search server (using rolling index)
 
 ###### Http html Report
 
-(Note: This modules only exports data to various remote endpoints, it doesn't ge erate any html)
+(Note: This modules only exports data to various remote endpoints, it doesn't generate any html)
 
 Export the result to a remote endpoint in order to generate an html report.
 
 For more information about the generation of the report you can look at the project : https://github.com/restqa/cucumber-html-reporter-server
 Basically you have 2 options to use this reporter.]:
+
 1. Use the Saas version hosted on : html-report.restqa.io (pro: ready, con: data privacy, shared)
 2. Host your own, sotfware available here : https://github.com/restqa/cucumber-html-reporter-server
 
@@ -200,6 +309,52 @@ let envConfig = {
         showErrors: true,  // Show the error message within slack
         reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
       }
+    },
+    {
+      type: 'microsoft-teams',
+      enabled: true,
+      config: {
+        url: 'https://outlook.office.com/webhook/xxx/IncomingWebhook/yyy/zzz', // The teams webhook url
+        onlyFailed: true, // Trigger the hook only for test failure  (default: false)
+        showErrors: true,  // Show the error message within teams
+        reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
+      }
+    },
+    {
+      type: 'line',
+      enabled: true,
+      config: {
+        token: 'sEdkjfEr745aasd546saSDdjklawE74S', // The line notfication token
+        onlyFailed: true, // Trigger the hook only for test failure  (default: false)
+        reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
+      }
+    },
+    {
+      type: 'discord',
+      enabled: true,
+      config: {
+        url: 'https://discordapp.com/api/webhooks/xxx/yyy', // The discord webhook url
+        onlyFailed: false, // Trigger the hook only for test failure  (default: false)
+        showErrors: true,  // Show the error message within slack
+        reportUrl: 'https://www.test.report/{uuid}', // The url to access to your detail test report if you have one,
+        tts: false, // enable TTS for the message, false by default
+        username: 'bot-name' //  alternative name for bot, uses the name it has in discord UI by default if nothing specified
+      }
+    },
+    {
+      type: 'mattermost',
+      enabled: true,
+      config: {
+        url: 'https://your-mattermost-url/webhooks/xxx',
+        onlyFailed: true, // Trigger the hook only for test failure  (default: false),
+        showErrors: true, // Show the error message within Mattermost,
+        reportUrl: 'https://www.test.report/{uuid}', // The url to access to your detail test report if you have one
+        channel: 'town-square', // The channel to send messages to
+        username: 'restqa-formatter', // Username to post as (only works if bot is allowed to change its name)
+        iconUrl: '', // Link to bot profile picture (only works if bot is allowed to change image)
+        iconEmoji: 'laughing',  // An emoji tag without the ':'s for bot profile picture (only works if bot is allowed to change image)
+        displayedErrorsLimit: 25 // Limit the number of errors displayed in one message
+      }
     }
   ]
 }
@@ -215,6 +370,14 @@ You can now run cucumber-js with the just created formatter
 
 > It's important to defined formatter export path to have access the logs, you can refer to the cucumber-js documentation (https://github.com/cucumber/cucumber-js/blob/master/docs/cli.md#formats)'
 
+### TODO
+
+Create channels for :
+
+- Rocket chat
+- Google Hangouts
+- Prometheus
+- Grafana Loki
 
 ## License
 
