@@ -346,8 +346,8 @@ let envConfig = {
       enabled: true,
       config: {
         url: 'https://your-mattermost-url/webhooks/xxx',
-        onlyFailed: true // Trigger the hook only for test failure  (default: false),
-        showErrors: true // Show the error message within Mattermost,
+        onlyFailed: true, // Trigger the hook only for test failure  (default: false),
+        showErrors: true, // Show the error message within Mattermost,
         reportUrl: 'https://www.test.report/{uuid}', // The url to access to your detail test report if you have one
         channel: 'town-square', // The channel to send messages to
         username: 'restqa-formatter', // Username to post as (only works if bot is allowed to change its name)
@@ -374,7 +374,6 @@ You can now run cucumber-js with the just created formatter
 
 Create channels for :
 
-- Mattermost
 - Rocket chat
 - Google Hangouts
 - Prometheus

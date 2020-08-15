@@ -101,8 +101,8 @@ ${'```'}`
       const data = Object.entries({
         channel: config.channel,
         username: config.username,
-        iconUrl: config.iconUrl,
-        iconEmoji: config.iconEmoji,
+        icon_url: config.iconUrl,
+        icon_emoji: config.iconEmoji,
         attachments: [attachment]
       })
         .filter((entry) => entry[1] != null)
