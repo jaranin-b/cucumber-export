@@ -235,13 +235,13 @@ The Elastic Search export allows you to create nice dashboard within Grafana or 
 
 ![grafana](https://restqa.io/assets/img/utils/screenshot-grafana.png)
 
-[Access to the Grafana dashboard installation guide](./dashboard/grafana/README.md)
+[Access to the Grafana dashboard installation guide](./dashboard-setup/grafana/README.md)
 
 2. **kibana**
 
 ![kibana](https://restqa.io/assets/img/utils/screenshot-kibana.png)
 
-[Access to the Kibana dashboard installation guide](./dashboard/kibana/README.md)
+[Access to the Kibana dashboard installation guide](./dashboard-setup/kibana/README.md)
 
 ###### Http html Report
 
