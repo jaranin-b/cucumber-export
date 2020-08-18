@@ -229,6 +229,20 @@ Export the result to an elastic search server (using rolling index)
 }
 ```
 
+The Elastic Search export allows you to create nice dashboard within Grafana or Kibana. And the good things is that we already prepared everything for you :
+
+1. **Grafana**
+
+![grafana](https://restqa.io/assets/img/utils/screenshot-grafana.png)
+
+[Access to the Grafana dashboard installation guide](./dashboard/grafana/README.md)
+
+2. **kibana**
+
+![kibana](https://restqa.io/assets/img/utils/screenshot-kibana.png)
+
+[Access to the Kibana dashboard installation guide](./dashboard/kibana/README.md)
+
 ###### Http html Report
 
 (Note: This modules only exports data to various remote endpoints, it doesn't generate any html)
