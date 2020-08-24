@@ -17,6 +17,8 @@ module.exports = function (config, testSuiteResult) {
       name: config.name,
       key: config.key,
       env: config.env,
+      repository: config.repository,
+      sha: config.sha,
       ...testSuiteResult.result
     }
 
