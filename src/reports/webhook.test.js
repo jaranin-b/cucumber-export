@@ -2,12 +2,12 @@ beforeEach(() => {
   jest.resetModules()
 })
 
-describe('#report - HTTP', () => {
+describe('#report - WEBHOOK', () => {
   test('Rejected if the config doesn\'t contain the url', () => {
-    const Http = require('./http')
+    const Webhook = require('./webhook')
     const config = {}
     const result = {}
-    expect(Http(config, result)).rejects.toThrow(new Error('config.url is required for the "http" report'))
+    expect(Webhook(config, result)).rejects.toThrow(new Error('config.url is required for the "webhook" report'))
   })
 
   test('Rejected if the request fail', () => {
@@ -24,7 +24,7 @@ describe('#report - HTTP', () => {
 
     got.mockRejectedValue(gotError)
 
-    const Http = require('./http')
+    const Webhook = require('./webhook')
     const config = {
       url: 'http://my-url.test/report'
     }
@@ -32,7 +32,7 @@ describe('#report - HTTP', () => {
     const result = {
       success: true
     }
-    expect(Http(config, result)).rejects.toThrow(new Errors.HTTP('HTTP REPORT', gotError))
+    expect(Webhook(config, result)).rejects.toThrow(new Errors.HTTP('WEBHOOK REPORT', gotError))
     const expectedOptions = {
       hostname: 'my-url.test',
       port: '',
@@ -58,7 +58,7 @@ describe('#report - HTTP', () => {
       }
     })
 
-    const Http = require('./http')
+    const Webhook = require('./webhook')
     const config = {
       url: 'http://my-url.test/report',
       method: 'PUT',
@@ -70,7 +70,7 @@ describe('#report - HTTP', () => {
     const result = {
       success: true
     }
-    expect(Http(config, result)).resolves.toBe('[HTTP REPORT][201] - http://my-url.test/report')
+    expect(Webhook(config, result)).resolves.toBe('[WEBHOOK REPORT][201] - http://my-url.test/report')
 
     const expectedOptions = {
       hostname: 'my-url.test',

@@ -3,7 +3,7 @@ describe('#services - Channels', () => {
     const index = require('./index')
     expect(Object.keys(index).length).toEqual(9)
     expect(Object.keys(index)).toEqual([
-      'http',
+      'webhook',
       'http-html-report',
       'elastic-search',
       'file',
