@@ -68,9 +68,9 @@ Export the result to a JSON file
 }
 ```
 
-###### Http
+###### Webhook
 
-Export the result to a http result
+Export the result to a webhook
 
 ```
 {
@@ -289,7 +289,7 @@ let envConfig = {
       }
     },
     {
-      type: 'http',
+      type: 'webhook',
       enabled: true,
       config: {
         url: 'https://httpdump.io/lb8f7',

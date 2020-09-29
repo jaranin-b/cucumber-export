@@ -1,5 +1,5 @@
 module.exports = {
-  http: require('./http'),
+  webhook: require('./webhook'),
   'http-html-report': require('./http-html-report'),
   'elastic-search': require('./elastic-search'),
   file: require('./file'),
