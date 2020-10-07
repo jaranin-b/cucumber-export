@@ -74,7 +74,7 @@ Export the result to a webhook
 
 ```
 {
-  type: 'http',
+  type: 'webhook',
   enabled: true,
   config: {
     url: 'https://httpdump.io/rb6zi', // The http endpoint to send the result
