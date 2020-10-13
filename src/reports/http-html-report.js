@@ -18,13 +18,13 @@ module.exports = function (config, result) {
     }
 
     if (config.auth) {
-      let {
+      const {
         username,
         password
       } = config.auth
 
       options.headers = {
-        authorization: `Basic ${Buffer.from(username + ':' + password, "utf8").toString("base64")}`
+        authorization: `Basic ${Buffer.from(username + ':' + password, 'utf8').toString('base64')}`
       }
     }
 
