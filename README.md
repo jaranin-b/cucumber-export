@@ -96,7 +96,7 @@ Receive a notification on slack about you test report
   enabled: true,
   config: {
     url: 'https://hooks.slack.com/service/xxx/yyy/zzz', // The slack webhook url
-    onlyFailed: true, // Trigger the hook only for test failure  (default: false)
+    onlyFailed: true, // Trigger the hook only for test failure  (default: true)
     showErrors: true,  // Show the error message within slack
     reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
   }
@@ -117,7 +117,7 @@ Receive a connector card in your Microsoft Teams channel when your test finishes
   enabled: true,
   config: {
     url: 'https://outlook.office.com/webhook/xxx/IncomingWebhook/yyy/zzz', // The teams webhook url (tutorial : https://docs.microsoft.com/en-us/learn/modules/msteams-webhooks-connectors/5-exercise-incoming-webhooks)
-    onlyFailed: true, // Trigger the hook only for test failure  (default: false)
+    onlyFailed: true, // Trigger the hook only for test failure  (default: true)
     showErrors: true,  // Show the error message within teams
   }
 }
@@ -139,7 +139,7 @@ Receive a message in your Discord channel when your test finishes via webhook. S
   enabled: true,
   config: {
     url: 'https://discordapp.com/api/webhooks/xxx/yyy', // The discord webhook url
-    onlyFailed: false, // Trigger the hook only for test failure  (default: false)
+    onlyFailed: false, // Trigger the hook only for test failure  (default: true)
     showErrors: true,  // Show the error message within slack
     reportUrl: 'https://www.test.report/{uuid}', // The url to access to your detail test report if you have one,
     tts: false, // enable TTS for the message, false by default
@@ -162,7 +162,7 @@ Receive a notification on line about you test report
   enabled: true,
   config: {
     token: 'sEdkjfEr745aasd546saSDdjklawE74S', // The line notfication token (get your token here : https://notify-bot.line.me/en/)
-    onlyFailed: true, // Trigger the hook only for test failure  (default: false)
+    onlyFailed: true, // Trigger the hook only for test failure  (default: true)
     reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
   }
 }
@@ -184,7 +184,7 @@ Receive a notification in your Mattermost channel when your test finishes
   enabled: true,
   config: {
     url: 'https://your-mattermost-url/webhooks/xxx',
-    onlyFailed: true // Trigger the hook only for test failure  (default: false),
+    onlyFailed: true // Trigger the hook only for test failure  (default: true),
     showErrors: true // Show the error message within Mattermost,
     reportUrl: 'https://www.test.report/{uuid}', // The url to access to your detail test report if you have one
     channel: 'town-square', // The channel to send messages to
