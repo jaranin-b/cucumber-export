@@ -73,6 +73,46 @@ describe('#report - HTTP HTML REPORT', () => {
     expect(got.mock.calls[0][0]).toEqual(expectedOptions)
   })
 
+  test('Success Case with basic auth', () => {
+    const got = require('got')
+    jest.mock('got')
+    got.mockResolvedValue({
+      statusCode: 201
+    })
+
+    const HttpHtmlReport = require('./http-html-report')
+    const config = {
+      url: 'http://my-url.test/report',
+      auth: {
+        username: 'admin',
+        password: 'test'
+      }
+    }
+
+    const result = {
+      id: 'qqq-www-eee',
+      success: true
+    }
+    expect(HttpHtmlReport(config, result)).resolves.toBe('[HTTP HTML REPORT][201] - Access to your test report : http://my-url.test/report/qqq-www-eee')
+
+    const expectedOptions = {
+      hostname: 'my-url.test',
+      port: '',
+      protocol: 'http:',
+      pathname: '/report',
+      method: 'POST',
+      json: {
+        id: 'qqq-www-eee',
+        success: true
+      },
+      headers: {
+        authorization: `Basic ${Buffer.from('admin:test').toString('base64')}`
+      }
+    }
+    expect(got.mock.calls.length).toBe(1)
+    expect(got.mock.calls[0][0]).toEqual(expectedOptions)
+  })
+
   test('Success Case using default html report from restqa', () => {
     const got = require('got')
     jest.mock('got')

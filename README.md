@@ -260,7 +260,11 @@ Basically you have 2 options to use this reporter.]:
   type: 'http-html-report',
   enabled: true,
   config: {
-    url: 'https://html-report.your-domain.dev' // (default : https://html-report.restqa.io)
+    url: 'https://html-report.your-domain.dev' // (default : https://html-report.restqa.io),
+    auth: { // Authentication through basic auth
+      username: 'olive',
+      password: 'test'
+    }
   }
 }
 ```

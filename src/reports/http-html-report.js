@@ -15,7 +15,17 @@ module.exports = function (config, result) {
       pathname: url.pathname,
       method: 'POST',
       json: result
+    }
 
+    if (config.auth) {
+      const {
+        username,
+        password
+      } = config.auth
+
+      options.headers = {
+        authorization: `Basic ${Buffer.from(username + ':' + password, 'utf8').toString('base64')}`
+      }
     }
 
     got(options)
