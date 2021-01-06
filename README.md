@@ -22,6 +22,159 @@ All The options are shared below.
 Returns a cucumber formatter where the result will be pre-formatted and transferred
 to the selected destination.
 
+## Usage
+
+### Setup your formatter (through cucumber)
+
+Create a new file at the root of your project. (restqa-formatter.js)
+
+```js
+# <root-dir>/restqa-formatter.js
+
+const { getFormatter } = require('@restqa/cucumber-export')
+
+let envConfig = {
+  uuid: 'xxx-yyy-zzz',
+  name: 'local',
+  env: 'uat',
+  outputs: [
+    {
+      type: 'http-html-report',
+      enabled: true,
+      config: {
+        url: 'https://html-report.your-domain.dev' // (default : https://html-report.restqa.io)
+      }
+    },
+    {
+      type: 'webhook',
+      enabled: true,
+      config: {
+        url: 'https://httpdump.io/lb8f7',
+        method: 'POST',
+        headers: {
+          'x-apikey': 'xxx-yyy-zzz'
+        }
+      }
+    },
+    {
+      type: 'elastic-search',
+      enabled: true,
+      config: {
+        url: 'http://my-elastic-search.local:9200',
+        index: 'bdd-e2e'
+      }
+    },
+    {
+      type: 'file',
+      enabled: true,
+      config: {
+        path: 'my-report.json' // File to save
+      }
+    },
+    {
+      type: 'slack',
+      enabled: true,
+      config: {
+        url: 'https://hooks.slack.com/service/xxx/yyy/zzz', // The slack webhook url
+        onlyFailed: true, // Trigger the hook only for test failure  (default: false)
+        showErrors: true,  // Show the error message within slack
+        reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
+      }
+    },
+    {
+      type: 'microsoft-teams',
+      enabled: true,
+      config: {
+        url: 'https://outlook.office.com/webhook/xxx/IncomingWebhook/yyy/zzz', // The teams webhook url
+        onlyFailed: true, // Trigger the hook only for test failure  (default: false)
+        showErrors: true,  // Show the error message within teams
+        reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
+      }
+    },
+    {
+      type: 'line',
+      enabled: true,
+      config: {
+        token: 'sEdkjfEr745aasd546saSDdjklawE74S', // The line notfication token
+        onlyFailed: true, // Trigger the hook only for test failure  (default: false)
+        reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
+      }
+    },
+    {
+      type: 'discord',
+      enabled: true,
+      config: {
+        url: 'https://discordapp.com/api/webhooks/xxx/yyy', // The discord webhook url
+        onlyFailed: false, // Trigger the hook only for test failure  (default: false)
+        showErrors: true,  // Show the error message within slack
+        reportUrl: 'https://www.test.report/{uuid}', // The url to access to your detail test report if you have one,
+        tts: false, // enable TTS for the message, false by default
+        username: 'bot-name' //  alternative name for bot, uses the name it has in discord UI by default if nothing specified
+      }
+    },
+    {
+      type: 'mattermost',
+      enabled: true,
+      config: {
+        url: 'https://your-mattermost-url/webhooks/xxx',
+        onlyFailed: true, // Trigger the hook only for test failure  (default: false),
+        showErrors: true, // Show the error message within Mattermost,
+        reportUrl: 'https://www.test.report/{uuid}', // The url to access to your detail test report if you have one
+        channel: 'town-square', // The channel to send messages to
+        username: 'restqa-formatter', // Username to post as (only works if bot is allowed to change its name)
+        iconUrl: '', // Link to bot profile picture (only works if bot is allowed to change image)
+        iconEmoji: 'laughing',  // An emoji tag without the ':'s for bot profile picture (only works if bot is allowed to change image)
+        displayedErrorsLimit: 25 // Limit the number of errors displayed in one message
+      }
+    }
+  ]
+}
+
+module.exports = getFormatter(envConfig)
+```
+
+### Run cucumber-js
+
+You can now run cucumber-js with the just created formatter
+
+`cucumber-js -f ./restqa-formatter.js:restqa.log`
+
+> It's important to defined formatter export path to have access the logs, you can refer to the cucumber-js documentation (https://github.com/cucumber/cucumber-js/blob/master/docs/cli.md#formats)'
+
+### Setup as a module
+
+If you already have an JSON export file you can export the result using :
+
+```
+const { export } = require('@restqa/cucumber-export')
+
+async function main() {
+  const options = {
+    uuid: 'xxx-yyy-zzz',
+    name: 'local',
+    env: 'uat',
+    outputs: [
+      {
+        type: 'http-html-report',
+        enabled: true,
+        config: {
+          url: 'https://html-report.your-domain.dev' // (default : https://html-report.restqa.io)
+        }
+      }
+    ]
+  }
+
+  const result = await export(options)
+}
+
+main() 
+```
+
+IMPORTANT : The duration can't be defined if you use this method. (it will appear as 0 into your repart)
+
+
+
+
 #### Options
 
 The Options are mandatory.
@@ -264,126 +417,6 @@ Basically you have 2 options to use this reporter.]:
   }
 }
 ```
-
-## Usage
-
-### Setup your formatter
-
-Create a new file at the root of your project. (restqa-formatter.js)
-
-```js
-# <root-dir>/restqa-formatter.js
-
-const { getFormatter } = require('@restqa/cucumber-export')
-
-let envConfig = {
-  uuid: 'xxx-yyy-zzz',
-  name: 'local',
-  env: 'uat',
-  outputs: [
-    {
-      type: 'http-html-report',
-      enabled: true,
-      config: {
-        url: 'https://html-report.your-domain.dev' // (default : https://html-report.restqa.io)
-      }
-    },
-    {
-      type: 'webhook',
-      enabled: true,
-      config: {
-        url: 'https://httpdump.io/lb8f7',
-        method: 'POST',
-        headers: {
-          'x-apikey': 'xxx-yyy-zzz'
-        }
-      }
-    },
-    {
-      type: 'elastic-search',
-      enabled: true,
-      config: {
-        url: 'http://my-elastic-search.local:9200',
-        index: 'bdd-e2e'
-      }
-    },
-    {
-      type: 'file',
-      enabled: true,
-      config: {
-        path: 'my-report.json' // File to save
-      }
-    },
-    {
-      type: 'slack',
-      enabled: true,
-      config: {
-        url: 'https://hooks.slack.com/service/xxx/yyy/zzz', // The slack webhook url
-        onlyFailed: true, // Trigger the hook only for test failure  (default: false)
-        showErrors: true,  // Show the error message within slack
-        reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
-      }
-    },
-    {
-      type: 'microsoft-teams',
-      enabled: true,
-      config: {
-        url: 'https://outlook.office.com/webhook/xxx/IncomingWebhook/yyy/zzz', // The teams webhook url
-        onlyFailed: true, // Trigger the hook only for test failure  (default: false)
-        showErrors: true,  // Show the error message within teams
-        reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
-      }
-    },
-    {
-      type: 'line',
-      enabled: true,
-      config: {
-        token: 'sEdkjfEr745aasd546saSDdjklawE74S', // The line notfication token
-        onlyFailed: true, // Trigger the hook only for test failure  (default: false)
-        reportUrl: 'https://www.test.report/{uuid}' // The url to access to your detail test report if you have one
-      }
-    },
-    {
-      type: 'discord',
-      enabled: true,
-      config: {
-        url: 'https://discordapp.com/api/webhooks/xxx/yyy', // The discord webhook url
-        onlyFailed: false, // Trigger the hook only for test failure  (default: false)
-        showErrors: true,  // Show the error message within slack
-        reportUrl: 'https://www.test.report/{uuid}', // The url to access to your detail test report if you have one,
-        tts: false, // enable TTS for the message, false by default
-        username: 'bot-name' //  alternative name for bot, uses the name it has in discord UI by default if nothing specified
-      }
-    },
-    {
-      type: 'mattermost',
-      enabled: true,
-      config: {
-        url: 'https://your-mattermost-url/webhooks/xxx',
-        onlyFailed: true, // Trigger the hook only for test failure  (default: false),
-        showErrors: true, // Show the error message within Mattermost,
-        reportUrl: 'https://www.test.report/{uuid}', // The url to access to your detail test report if you have one
-        channel: 'town-square', // The channel to send messages to
-        username: 'restqa-formatter', // Username to post as (only works if bot is allowed to change its name)
-        iconUrl: '', // Link to bot profile picture (only works if bot is allowed to change image)
-        iconEmoji: 'laughing',  // An emoji tag without the ':'s for bot profile picture (only works if bot is allowed to change image)
-        displayedErrorsLimit: 25 // Limit the number of errors displayed in one message
-      }
-    }
-  ]
-}
-
-module.exports = getFormatter(envConfig)
-```
-
-### Run cucumber-js
-
-You can now run cucumber-js with the just created formatter
-
-`cucumber-js -f ./restqa-formatter.js:restqa.log`
-
-> It's important to defined formatter export path to have access the logs, you can refer to the cucumber-js documentation (https://github.com/cucumber/cucumber-js/blob/master/docs/cli.md#formats)'
-
 ### TODO
 
 Create channels for :

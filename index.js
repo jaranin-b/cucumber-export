@@ -118,6 +118,22 @@ function getFormatter (config) {
   }
 }
 
+function Export (result, options) {
+  const duration = 0
+  const  success = result
+    .map(feature => {
+      return feature.elements.map(scenario => {
+        return scenario.steps.reduce((a, step) => a && step.result.status === 'passed', true)
+      })
+      .reduce((a, i) => a && i, true)
+    })
+    .reduce((a, i) => a && i, true)
+
+  const format = new Transport(options, {duration, success})
+  return format.exports(result)
+}
+
 module.exports = {
-  getFormatter
+  getFormatter,
+  Export
 }
