@@ -146,7 +146,7 @@ You can now run cucumber-js with the just created formatter
 If you already have an JSON export file you can export the result using :
 
 ```
-const { export } = require('@restqa/cucumber-export')
+const { Export } = require('@restqa/cucumber-export')
 
 async function main() {
   const options = {
@@ -164,7 +164,8 @@ async function main() {
     ]
   }
 
-  const result = await export(options)
+  const result = await Export(options)
+  console.log(result)
 }
 
 main() 
