@@ -129,7 +129,7 @@ function Export (result, options) {
     })
     .reduce((a, i) => a && i, true)
 
-  const format = new Transport(options, { duration, success })
+  const format = new Transport(options, { result: { duration, success } })
   return format.exports(result)
 }
 
