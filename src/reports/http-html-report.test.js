@@ -128,13 +128,13 @@ describe('#report - HTTP HTML REPORT', () => {
       id: 'qqq-www-eee',
       success: true
     }
-    expect(HttpHtmlReport(config, result)).resolves.toBe('[HTTP HTML REPORT][201] - Access to your test report : https://html-report.restqa.io/qqq-www-eee')
+    expect(HttpHtmlReport(config, result)).resolves.toBe('[HTTP HTML REPORT][201] - Access to your test report : https://restqa.io/reports/qqq-www-eee')
 
     const expectedOptions = {
-      hostname: 'html-report.restqa.io',
+      hostname: 'restqa.io',
       port: '',
       protocol: 'https:',
-      pathname: '/',
+      pathname: '/reports',
       method: 'POST',
       json: {
         id: 'qqq-www-eee',

@@ -5,7 +5,7 @@ const { URL } = require('url')
 module.exports = function (config, result) {
   return new Promise((resolve, reject) => {
     config = config || {}
-    config.url = config.url || 'https://html-report.restqa.io'
+    config.url = config.url || 'https://restqa.io/reports'
     const url = new URL(config.url)
 
     const options = {
