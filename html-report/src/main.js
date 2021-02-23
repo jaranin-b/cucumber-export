@@ -23,16 +23,16 @@ Vue.use(VueGoogleMaps, {
     key: 'AIzaSyB7OXmzfQYua_1LEhRdqsoYzyJOPh9hGLg',
   },
 });
-Vue.component('apexchart', VueApexCharts);
-Vue.mixin(layoutMixin);
-Vue.use(Toasted, {duration: 10000});
+Vue.component('apexchart', VueApexCharts)
+Vue.mixin(layoutMixin)
+Vue.use(Toasted, { duration: 10000 })
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   store,
   router,
-  render: h => h(App),
-});
+  render: h => h(App)
+})
