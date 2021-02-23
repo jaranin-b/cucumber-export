@@ -1,11 +1,11 @@
 <template>
   <div class="dashboard-page">
-    <h1 class="page-title">Dashboard</h1>
+    <h1 class="page-title">Dashboard Test</h1>
     <b-row>
       <b-col lg="6">
         <div class="pb-xlg h-100">
-          <Widget class="h-100 mb-0" title="Features" >
-            <highcharts :options="features"></highcharts>
+          <Widget class="h-100 mb-0" title="Features">
+            <highcharts :options="featuresForChart"></highcharts>
             {{ result.total }} Features
           </Widget>
         </div>
@@ -13,26 +13,98 @@
       <b-col lg="6">
         <div class="pb-xlg h-100">
           <Widget class="h-100 mb-0" title="Scenarios">
-            <highcharts :options="scenarios"></highcharts>
+            <highcharts :options="scenariosForChart"></highcharts>
           </Widget>
         </div>
+      </b-col>
+      <!--   FEATURES LIST TABLE   -->
+      <b-col cols="12">
+        <Widget
+            title="<h5>Features <span class='fw-semi-bold'>overview</span></h5>"
+            bodyClass="widget-table-overflow"
+            style="overflow: auto;"
+            customHeader
+        >
+          <b-table class="features-table mt-2" small bordered :fields="fields" :items="features" responsive="sm">
+            <!--         FEATURE_NAME         -->
+            <template #cell(feature_name)="data">
+              <router-link :to="{name: 'FeaturePage', params: {id: data.item.id}}">
+                {{ data.item.feature_name }}
+              </router-link>
+            </template>
+            <!--         TAGS         -->
+            <template #cell(tags)="data">
+              <b-badge
+                  v-for="(tag, idx) in data.item.tags"
+                  :key="`tag-${idx}-${tag.name}`"
+                  class="mt-1"
+                  pill
+                  style="font-size: .9em;"
+                  variant="primary"
+              >
+                {{ tag.name }} - {{ tag.line }}
+              </b-badge>
+            </template>
+          </b-table>
+        </Widget>
       </b-col>
     </b-row>
   </div>
 </template>
 
 <script>
-import Widget from '@/components/Widget/Widget';
-import { Chart } from 'highcharts-vue';
+import Widget from '@/components/Widget/Widget'
+import { Chart } from 'highcharts-vue'
 
 export default {
-  name: "TestSuites",
+  name: 'TestSuites',
+  /*
+  * COMPONENTS */
   components: {
     Widget,
     highcharts: Chart
   },
-  data() {
+
+  /*
+  * DATA */
+  data () {
     return {
+      fields: [
+        {
+          key: 'feature_name',
+          label: 'Feature Name',
+          class: 'feature-name'
+        },
+        {
+          key: 'tags',
+          label: 'Tags'
+        },
+        {
+          key: 'total',
+          label: 'Total',
+          class: 'text-center'
+        },
+        {
+          key: 'passed',
+          label: 'Passed',
+          class: 'text-center'
+        },
+        {
+          key: 'failed',
+          label: 'Failed',
+          class: 'text-center'
+        },
+        {
+          key: 'skipped',
+          label: 'Skipped',
+          class: 'text-center'
+        },
+        /*{
+          key: 'undefined',
+          label: 'Undefined',
+          class: 'text-center'
+        },*/
+      ],
       result: {
         total: this.getResult().total,
         passed: this.getResult().passed,
@@ -40,35 +112,44 @@ export default {
       }
     }
   },
+
+  /*
+  * METHODS */
   methods: {
-    getFeatureData() {
+    getFeatureData () {
       return [{
         label: 'Passed',
         data: this.getResult().passed
-      },{
+      }, {
         label: 'Failed',
         data: this.getResult().failed
       }]
     },
-    getScenarioData() {
+    getScenarioData () {
       return [{
         label: 'Passed',
         data: this.getResult().scenarios.passed
-      },{
+      }, {
         label: 'Failed',
         data: this.getResult().scenarios.failed
-      },{
+      }, {
         label: 'skipped',
         data: this.getResult().scenarios.skipped
-      },{
+      }, {
         label: 'undefined',
         data: this.getResult().scenarios.undefined
       }]
     }
   },
+
+  /*
+  * COMPUTED */
   computed: {
-    features() {
-      let {success, danger} = this.appConfig.colors;
+    features () {
+      return this.getResult() ? this.getResult().features : []
+    },
+    featuresForChart () {
+      let { success, danger } = this.appConfig.colors
       let series = [
         {
           name: 'Features',
@@ -79,7 +160,7 @@ export default {
             }
           })
         }
-      ];
+      ]
       return {
         chart: {
           type: 'pie',
@@ -125,10 +206,10 @@ export default {
           enabled: false
         },
         series
-      };
+      }
     },
-    scenarios() {
-      let {success, danger, info, secondary} = this.appConfig.colors;
+    scenariosForChart () {
+      let { success, danger, info, secondary } = this.appConfig.colors
       let series = [
         {
           name: 'Scenarios',
@@ -139,7 +220,7 @@ export default {
             }
           })
         }
-      ];
+      ]
       return {
         chart: {
           type: 'pie',
@@ -185,8 +266,20 @@ export default {
           enabled: false
         },
         series
-      };
+      }
     }
   }
-};
+}
 </script>
+
+<style lang="scss">
+.features-table {
+  overflow: auto;
+  min-width: 36rem;
+
+  th {
+    background-color: unset !important;
+    color: unset !important;
+  }
+}
+</style>
