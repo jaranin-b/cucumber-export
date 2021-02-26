@@ -126,7 +126,8 @@ export default {
         total: this.getResult().total,
         passed: this.getResult().passed,
         failed: this.getResult().failed,
-        name: this.getResult().name
+        name: this.getResult().name,
+        success: this.getResult().success
       }
     }
   },
