@@ -1,15 +1,15 @@
 {
   "name": "@restqa/cucumber-export",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A simple cucumber-js formatter exporting your result to different endpoints",
   "main": "index.js",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch --coverage",
     "test:coverage": "jest --coverage",
-    "lint": "standard src/",
-    "lint:fix": "standard --fix src/",
-    "sample": "cucumber-js -f sample.js:restqa.log features"
+    "lint": "standard index.js src/",
+    "lint:fix": "standard --fix index.js src/",
+    "sample": "cucumber-js -f sample/formatter.js:restqa.log sample/features"
   },
   "repository": {
     "type": "git",

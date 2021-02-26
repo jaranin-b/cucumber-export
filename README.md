@@ -414,7 +414,7 @@ Basically you have 2 options to use this reporter.]:
   type: 'http-html-report',
   enabled: true,
   config: {
-    url: 'https://html-report.your-domain.dev' // (default : https://html-report.restqa.io),
+    url: 'https://html-report.your-domain.dev' // (default : https://restqa.io/reports),
     auth: { // Authentication through basic auth
       username: 'olive',
       password: 'test'
@@ -422,6 +422,16 @@ Basically you have 2 options to use this reporter.]:
   }
 }
 ```
+
+
+### DEVELOPMENT
+
+if you would like to contribute to the project you will simply need to :
+
+* Install the packages : `npm i`
+* Then you can use the sample available on the [./sample](./sample) folder using the command : `npm run sample`
+
+
 ### TODO
 
 Create channels for :
