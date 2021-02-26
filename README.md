@@ -39,6 +39,13 @@ let envConfig = {
   env: 'uat',
   outputs: [
     {
+      type: 'html',
+      enabled: true,
+      config: {
+        path: 'my-report-folder' // (default : ./report)
+      }
+    },
+    {
       type: 'http-html-report',
       enabled: true,
       config: {
@@ -148,27 +155,24 @@ If you already have an JSON export file you can export the result using :
 ```
 const { Export } = require('@restqa/cucumber-export')
 
-async function main() {
+async function main(result) {
   const options = {
     uuid: 'xxx-yyy-zzz',
     name: 'local',
     env: 'uat',
     outputs: [
       {
-        type: 'http-html-report',
-        enabled: true,
-        config: {
-          url: 'https://html-report.your-domain.dev' // (default : https://html-report.restqa.io)
-        }
+        type: 'html',
+        enabled: true
       }
     ]
   }
 
-  const result = await Export(options)
-  console.log(result)
+  const exportResult = await Export(result, options)
+  console.log(exportResult)
 }
 
-main() 
+main(result) 
 ```
 
 IMPORTANT : The duration can't be defined if you use this method. (it will appear as 0 into your repart)
@@ -221,6 +225,25 @@ Export the result to a JSON file
   }
 }
 ```
+
+###### HTML
+
+Export the result to a local file folder as HTML format
+
+```
+{
+  type: 'html',
+  enabled: true,
+  config: {
+    path: 'my-folder' // Folder to save the report
+  }
+}
+```
+
+_Example_:
+
+![html](https://restqa.io/assets/img/utils/cucumber-export-html.png)
+
 
 ###### Webhook
 
@@ -399,15 +422,13 @@ The Elastic Search export allows you to create nice dashboard within Grafana or 
 
 ###### Http html Report
 
-(Note: This modules only exports data to various remote endpoints, it doesn't generate any html)
-
 Export the result to a remote endpoint in order to generate an html report.
 
 For more information about the generation of the report you can look at the project : https://github.com/restqa/cucumber-html-reporter-server
 Basically you have 2 options to use this reporter.]:
 
 1. Use the Saas version hosted on : html-report.restqa.io (pro: ready, con: data privacy, shared)
-2. Host your own, sotfware available here : https://github.com/restqa/cucumber-html-reporter-server
+2. Host your own, sotfware available here : https://github.com/restqa/sidekick-server
 
 ```
 {
