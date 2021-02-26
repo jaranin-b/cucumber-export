@@ -7,5 +7,6 @@ module.exports = {
   'microsoft-teams': require('./microsoft-teams'),
   discord: require('./discord'),
   line: require('./line'),
-  mattermost: require('./mattermost')
+  mattermost: require('./mattermost'),
+  html: require('./html')
 }
