@@ -3,7 +3,7 @@ const fs = require('fs-extra')
 const path = require('path')
 
 const FOLDER = path.resolve(os.tmpdir(), 'report')
-const HTML_TEMPLATE_FOLDER = path.resolve(__dirname, '..', '..', 'html-report', 'dist')
+const HTML_TEMPLATE_FOLDER = path.resolve(__dirname, '..', '..', 'html-report-template', 'dist')
 
 beforeEach(() => {
   jest.resetModules()

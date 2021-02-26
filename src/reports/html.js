@@ -4,7 +4,7 @@ const url = require('url')
 
 module.exports = function (config, result) {
 
-  const HTML_TEMPLATE_FOLDER = path.resolve(__dirname, '..', '..', 'html-report', 'dist')
+  const HTML_TEMPLATE_FOLDER = path.resolve(__dirname, '..', '..', 'html-report-template', 'dist')
 
   return new Promise((resolve, reject) => {
     config = config || {}
