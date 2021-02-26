@@ -1,6 +1,10 @@
 <template>
   <div class="dashboard-page">
-    <h1 class="page-title">Dashboard Test</h1>
+    <h1 class="page-title">
+      <i v-if="result.success" style="color: green" class="fa fa-thumbs-o-up"></i>
+      <i v-if="!result.success" style="color: red" class="fa fa-thumbs-o-down"></i>
+      {{ result.name }}
+    </h1>
     <b-row>
       <b-col lg="6">
         <div class="pb-xlg h-100">
@@ -25,7 +29,7 @@
             style="overflow: auto;"
             customHeader
         >
-          <b-table class="features-table mt-2" small bordered :fields="fields" :items="features" responsive="sm">
+          <b-table class="features-table mt-2 table-hover" small bordered :fields="fields" :items="features" responsive="sm">
             <!--         FEATURE_NAME         -->
             <template #cell(feature_name)="data">
               <router-link :to="{name: 'FeaturePage', params: {id: data.item.id}}">
@@ -40,9 +44,18 @@
                   class="mt-1"
                   pill
                   style="font-size: .9em;"
-                  variant="primary"
+                  variant="secondary"
               >
-                {{ tag.name }} - {{ tag.line }}
+                {{ tag.name }}
+              </b-badge>
+            </template>
+            <template #cell(status)="data">
+              <b-badge
+                  class="mt-1"
+                  style="font-size: .9em;"
+                  :variant="true === data.item.result ? 'success' : 'danger'"
+              >
+              {{ getResultLabel( data.item.result ) }}
               </b-badge>
             </template>
           </b-table>
@@ -80,6 +93,10 @@ export default {
           label: 'Tags'
         },
         {
+          key: 'status',
+          label: 'Status'
+        },
+        {
           key: 'total',
           label: 'Total',
           class: 'text-center'
@@ -108,7 +125,8 @@ export default {
       result: {
         total: this.getResult().total,
         passed: this.getResult().passed,
-        failed: this.getResult().failed
+        failed: this.getResult().failed,
+        name: this.getResult().name
       }
     }
   },
@@ -116,6 +134,9 @@ export default {
   /*
   * METHODS */
   methods: {
+    getResultLabel (bool) {
+      return  bool ? 'passed' : 'failed'
+    },
     getFeatureData () {
       return [{
         label: 'Passed',

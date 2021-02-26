@@ -6,7 +6,7 @@
         @mouseleave="sidebarMouseLeave"
     >
       <header class="logo">
-        <router-link to="/"><span class="primary-word">RestQA</span></router-link>
+        <router-link to="/"><span class="primary-word"><img :src="logo" width="50" /></span></router-link>
       </header>
       <ul class="nav">
         <NavLink
@@ -20,7 +20,6 @@
         <NavLink
             :activeItem="activeItem"
             header="Features"
-            link="/app/components"
             iconName="flaticon-network"
             index="components"
             v-bind:childrenLinks="featuresChild"
@@ -80,16 +79,22 @@
 import { mapState, mapActions } from 'vuex';
 import isScreen from '@/core/screenHelper';
 import NavLink from './NavLink/NavLink';
+import logo from '../../assets/logo.png';
 
 export default {
   name: 'Sidebar',
   components: { NavLink },
   data() {
     return {
+      logo,
       featuresChild: this.getResult().features.map(feature => {
         return {
-          header: (feature.result ? '🤩' : '💔' ) + ' ' +  feature.feature_name,
-          link: '/features/' + feature.id
+          header: feature.feature_name,
+          iconName: feature.result ? 'glyphicon-ok-sign' : 'glyphicon-remove-sign',
+          link: this.$router.resolve({ 
+            name: 'FeaturePage',
+            params: { id: feature.id}
+          }).resolved.fullPath
         }
       })
     };

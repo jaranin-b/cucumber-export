@@ -20,7 +20,7 @@ export default {
               .slice(1)
               .map(route => route
                   .split('-')
-                  .map(word => word && word[0].toUpperCase() + word.slice(1))
+                  .map(word => word && decodeURIComponent(word[0].toUpperCase() + word.slice(1)))
                   .join(' ')
               )
           )

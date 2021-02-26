@@ -11,7 +11,8 @@
 
   a {
     display: block;
-    color: var(--sidebar-color-item);
+    //color: var(--sidebar-color-item);
+    color: #dec3c9;
     text-decoration: none;
     cursor: pointer;
   }
@@ -32,6 +33,7 @@
 
 
     &:hover {
+      color: #fff;
       background-color: var(--sidebar-item-hover-bg-color);
     }
 
@@ -147,4 +149,14 @@ a.router-link-active {
       }
     }
   }
+}
+
+i.glyphicon-ok-sign {
+  color: #22DB35;
+  font-size: 15px;
+}
+
+i.glyphicon-remove-sign {
+  color: red;
+  font-size: 15px;
 }

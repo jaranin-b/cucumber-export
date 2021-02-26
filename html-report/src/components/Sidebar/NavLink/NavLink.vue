@@ -27,15 +27,17 @@
           :header="link.header"
           :index="link.index"
           :link="link.link"
+          :iconName="link.iconName"
           :childrenLinks="link.childrenLinks"
           :key="link.link"
         />
       </ul>
     </b-collapse>
   </li>
-  <li v-else>
+  <li v-else :title="header">
     <router-link :to="index !== 'menu' && link">
-      {{header}} <sup v-if="label" :class="'text-' + labelColor" class="headerLabel">{{label}}</sup>
+      <i v-if="iconName" :class="'glyphicon ' + iconName"></i>
+      {{getCroppedHeader(header)}}
     </router-link>
   </li>
 </template>
@@ -67,6 +69,12 @@ export default {
     };
   },
   methods: {
+    getCroppedHeader(header) {
+      if (header.length > 17) {
+        header = header.substr(0, 14) + '...'
+      }
+      return header
+    },
     ...mapActions('layout', ['changeSidebarActive']),
     togglePanelCollapse(link) {
       this.changeSidebarActive(link);

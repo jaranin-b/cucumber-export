@@ -1,5 +1,4 @@
 import config from '../config';
-import result from '@/assets/results/restqa-result'
 
 export default {
     data: () => {
@@ -9,7 +8,7 @@ export default {
     },
   methods: {
     getResult() {
-      return result
+      return window.RESTQA_RESULT
     },
     decodeHtml(html) {
       let txt = document.createElement("textarea");

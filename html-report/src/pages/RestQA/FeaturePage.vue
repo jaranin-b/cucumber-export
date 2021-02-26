@@ -1,8 +1,58 @@
 <template>
   <div class="dashboard-page">
-    <h1 class="page-title">Feature: {{ feature.feature_name }}</h1>
+    <h1 class="page-title">
+      <i v-if="feature.result" style="color: green" class="fa fa-thumbs-o-up"></i>
+      <i v-if="!feature.result" style="color: red" class="fa fa-thumbs-o-down"></i>
+      Feature:  {{ feature.feature_name }}
+    </h1>
     <b-row>
       <!--   SCENARIOS PIE-CHART   -->
+      <b-col lg="6">
+        <div class="pb-xlg h-100">
+          <Widget class="h-100 mb-0" >
+            <h3>Feature <span class="fw-semi-bold">Detail</span></h3>
+            <p>{{ feature.feature_name }}</p>
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <tbody>
+                  <tr>
+                    <td style="text-align: right"><i class="fa fa-tag"> </i> Tags</td>
+                    <td style="text-align: left">{{ feature.tags.map(_ => _.name).join(' ') }}</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right"> <i class="fa fa-chain"></i> Unique identifier</td>
+                    <td style="text-align: left">{{ feature.id }}</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right"><i class="fa fa-file-o"></i> Filename</td>
+                    <td style="text-align: left">{{ feature.uri }}</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right"><i class="fa fa-clock-o"></i> Time</td>
+                    <td style="text-align: left">{{ feature.timestamp }}</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right"><i class="fa fa-bars"></i> Total Scenario </td>
+                    <td style="text-align: left">{{ feature.total }}</td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right"><i class="fa fa-trophy"></i> Scenario passed </td>
+                    <td style="text-align: left"><b-badge variant="success" pill>{{ feature.passed }}</b-badge></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right"><i class="fa fa-ambulance"></i> Scenario failed </td>
+                    <td style="text-align: left"><b-badge variant="danger" pill>{{ feature.failed }}</b-badge></td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: right"><i class="fa fa-waring"></i> Scenario skipped </td>
+                    <td style="text-align: left"><b-badge variant="info" pill>{{ feature.skipped }}</b-badge></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </Widget>
+        </div>
+      </b-col>
       <b-col lg="6">
         <div class="pb-xlg h-100">
           <Widget class="h-100 mb-0" title="Scenarios">
@@ -35,15 +85,18 @@
                   pill
                   variant="secondary"
               >
-                {{ tag.name }} - {{ tag.line }}
+                {{ tag.name }}
               </b-badge>
             </div>
+            <br />
 
             <div
                 class="d-flex align-items-center justify-content-between"
             >
               <h4>
-                Scenario: <b>{{ scenario.name }}</b>
+                <i v-if="scenario.result" style="color: green" class="fa fa-thumbs-o-up"></i>
+                <i v-if="!scenario.result" style="color: red" class="fa fa-thumbs-o-down"></i>
+                Scenario: <b :class="scenario.result ? '' : 'error-title'">{{ scenario.name }}</b>
               </h4>
               <div class="d-flex align-items-center">
                 <span class="mr-5">Duration: {{ scenario.duration }}</span>
@@ -71,23 +124,33 @@
                 class="d-flex justify-content-between align-items-center"
             >
               <!--       STEP INFO       -->
+<div class="flex-grow-1" >
               <div class="d-flex align-items-center flex-grow-1">
                 <h5
-                    class="mr-3 d-flex align-items-center"
+                    class="mr-3 d-flex "
                     :class="getStepTitleClass(step)"
                 >
                   <span :class="`mr-2 glyphicon glyphicon-${getStepGlyphiconClass(step)}`" aria-hidden="true"></span>
                   <b>{{ step.keyword }}</b>
                 </h5>
-                <h6
-                    class="text-left"
-                >
-                  {{ step.name }}
-                </h6>
+                  <h6 class="text-left"> {{ step.name }}</h6>
+</div>
+<div>
+                  <pre class="step"  v-if="step.result.status === 'failed'">
+                    {{ step.result.error_message }}
+                  </pre>
+                  <pre class="step" v-if="step.result.status === 'undefined'">
+// With Callbacks
+{{ step.keyword }}(/^{{ step.name.replace(/"[^"]*"/g, '"\(\[\^\"\]\*\)"')}} $/, (callback) => {
+    // Write code here that turns the phrase above into concrete actions
+    callback(null, 'pending');
+});
+                  </pre>
+</div>
               </div>
               <!--       STEP DURATION       -->
               <p>
-                {{ step.result.duration }}
+                {{ getDurationinMs(step.result.duration) }}
               </p>
             </div>
           </b-collapse>
@@ -114,6 +177,7 @@ const getLegendColor = function (legend) {
 }
 import Widget from '@/components/Widget/Widget'
 import { Chart } from 'highcharts-vue'
+import moment from 'moment'
 
 export default {
   name: 'FeaturePage',
@@ -213,6 +277,9 @@ export default {
   /*
   * METHODS */
   methods: {
+    getDurationinMs (duration) {
+      return !duration ? '0s' : moment.utc(duration/ 1000000).format('HH:mm:ss.SSS')
+    },
     getStepGlyphiconClass (step) {
       return step.result.status === 'passed' ?
           'ok' : step.result.status === 'failed' ?
@@ -230,16 +297,16 @@ export default {
     getScenarioData () {
       return [{
         label: 'Passed',
-        data: this.getResult().scenarios.passed
+        data: this.feature.passed
       }, {
         label: 'Failed',
-        data: this.getResult().scenarios.failed
+        data: this.feature.failed
       }, {
         label: 'skipped',
-        data: this.getResult().scenarios.skipped
+        data: this.feature.skipped
       }, {
         label: 'undefined',
-        data: this.getResult().scenarios.undefined
+        data: this.feature.undefined
       }]
     },
     parseDate (date) {
@@ -261,5 +328,11 @@ export default {
 .collapsed .when-opened,
 .not-collapsed .when-closed {
   display: none;
+}
+.error-title {
+  color: red;
+}
+pre.step{ 
+ margin: 0 10px 0 20px
 }
 </style>
