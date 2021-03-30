@@ -5,7 +5,7 @@ const { URL } = require('url')
 module.exports = function (config, result) {
   return new Promise((resolve, reject) => {
     config = config || {}
-    config.url = config.url || 'https://html-report.restqa.io'
+    config.url = config.url || 'https://restqa.io/reports'
     const url = new URL(config.url)
 
     const options = {
@@ -15,7 +15,17 @@ module.exports = function (config, result) {
       pathname: url.pathname,
       method: 'POST',
       json: result
+    }
 
+    if (config.auth) {
+      const {
+        username,
+        password
+      } = config.auth
+
+      options.headers = {
+        authorization: `Basic ${Buffer.from(username + ':' + password, 'utf8').toString('base64')}`
+      }
     }
 
     got(options)

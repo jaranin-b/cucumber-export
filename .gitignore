@@ -3,5 +3,6 @@ coverage
 my-report.json
 sample.js
 tt.txt
-features
+./features
 restqa.log
+report

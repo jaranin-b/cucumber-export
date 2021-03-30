@@ -4,7 +4,7 @@ const { URL } = require('url')
 
 module.exports = function (config, result) {
   return new Promise((resolve, reject) => {
-    if (!config.url) return reject(new Error('config.url is required for the "http" report'))
+    if (!config.url) return reject(new Error('config.url is required for the "webhook" report'))
 
     const url = new URL(config.url)
 
@@ -20,10 +20,10 @@ module.exports = function (config, result) {
 
     got(options)
       .then(res => {
-        resolve(`[HTTP REPORT][${res.statusCode}] - ${config.url}`)
+        resolve(`[WEBHOOK REPORT][${res.statusCode}] - ${config.url}`)
       })
       .catch(err => {
-        reject(new Errors.HTTP('HTTP REPORT', err))
+        reject(new Errors.HTTP('WEBHOOK REPORT', err))
       })
   })
 }
