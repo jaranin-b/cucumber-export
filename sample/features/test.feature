@@ -1,5 +1,6 @@
 Feature: As a user i can manage my account
 
+@test
 Scenario: Access to my account from the dashboad page
 Given I have the dashboard page
 When I click on my account

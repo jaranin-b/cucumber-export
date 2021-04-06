@@ -1,4 +1,4 @@
-let { Before, Given, When, Then } = require('cucumber')
+let { Before, Given, When, Then } = require('@cucumber/cucumber')
 
 Before('@skip', function() {
   return 'skipped'
