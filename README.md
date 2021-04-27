@@ -450,7 +450,7 @@ Basically you have 2 options to use this reporter.]:
 if you would like to contribute to the project you will simply need to :
 
 * Install the packages : `npm i`
-* Then you can use the sample available on the [./sample](./sample) folder using the command : `npm run sample`
+* Then you can use the example available on the [./example](./example) folder using the command : `npm run example`
 
 
 ### TODO
