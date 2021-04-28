@@ -118,41 +118,11 @@
           <hr>
           <!--     SCENARIO COLLAPSE DETAILS     -->
           <b-collapse :id="`scenario-accordion-${scenario.id}`" role="tabpanel">
-            <div
-                v-for="(step, stepIdx) in scenario.steps"
-                :key="`scenario-step-${stepIdx}`"
-                class="d-flex justify-content-between align-items-center"
-            >
-              <!--       STEP INFO       -->
-<div class="flex-grow-1" >
-              <div class="d-flex align-items-center flex-grow-1">
-                <h5
-                    class="mr-3 d-flex "
-                    :class="getStepTitleClass(step)"
-                >
-                  <span :class="`mr-2 glyphicon glyphicon-${getStepGlyphiconClass(step)}`" aria-hidden="true"></span>
-                  <b>{{ step.keyword }}</b>
-                </h5>
-                  <h6 class="text-left"> {{ step.name }}</h6>
-</div>
-<div>
-                  <pre class="step"  v-if="step.result.status === 'failed'">
-                    {{ step.result.error_message }}
-                  </pre>
-                  <pre class="step" v-if="step.result.status === 'undefined'">
-// With Callbacks
-{{ step.keyword }}(/^{{ step.name.replace(/"[^"]*"/g, '"\(\[\^\"\]\*\)"')}} $/, (callback) => {
-    // Write code here that turns the phrase above into concrete actions
-    callback(null, 'pending');
-});
-                  </pre>
-</div>
-              </div>
-              <!--       STEP DURATION       -->
-              <p>
-                {{ getDurationinMs(step.result.duration) }}
-              </p>
-            </div>
+            <Steps 
+              v-for="(step, stepIdx) in scenario.steps"
+              :key="`scenario-step-${stepIdx}`"
+              :data="step"
+              />
           </b-collapse>
         </Widget>
       </b-col>
@@ -175,14 +145,16 @@ const getLegendColor = function (legend) {
               'text-primary' : legend.toLowerCase() === 'undefined' ?
                   'text-secondary' : ''
 }
+
 import Widget from '@/components/Widget/Widget'
+import Steps from '@/components/Feature/Steps'
 import { Chart } from 'highcharts-vue'
-import moment from 'moment'
 
 export default {
   name: 'FeaturePage',
   components: {
     highcharts: Chart,
+    Steps,
     Widget
   },
   /*
@@ -277,23 +249,6 @@ export default {
   /*
   * METHODS */
   methods: {
-    getDurationinMs (duration) {
-      return !duration ? '0s' : moment.utc(duration/ 1000000).format('HH:mm:ss.SSS')
-    },
-    getStepGlyphiconClass (step) {
-      return step.result.status === 'passed' ?
-          'ok' : step.result.status === 'failed' ?
-              'exclamation-sign' : step.result.status === 'skipped' ?
-                  'circle-arrow-right' : step.result.status === 'undefined' ?
-                      'question-sign' : ''
-    },
-    getStepTitleClass (step) {
-      return step.result.status === 'passed' ?
-          'text-success' : step.result.status === 'failed' ?
-              'text-danger' : step.result.status === 'skipped' ?
-                  'text-primary' : step.result.status === 'undefined' ?
-                      'text-secondary' : ''
-    },
     getScenarioData () {
       return [{
         label: 'Passed',
@@ -308,10 +263,6 @@ export default {
         label: 'undefined',
         data: this.feature.undefined
       }]
-    },
-    parseDate (date) {
-      const dateSet = date.toDateString().split(' ')
-      return `${date.toLocaleString('en-us', { month: 'long' })} ${dateSet[2]}, ${dateSet[3]}`
     },
   },
 
@@ -331,8 +282,5 @@ export default {
 }
 .error-title {
   color: red;
-}
-pre.step{ 
- margin: 0 10px 0 20px
 }
 </style>

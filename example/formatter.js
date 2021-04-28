@@ -97,7 +97,7 @@ const envConfig = {
     },
     {
       type: 'file',
-      enabled: false,
+      enabled: true,
       config: {
         path: 'my-report.json' // File to save
       }
