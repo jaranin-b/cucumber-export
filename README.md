@@ -1,6 +1,35 @@
 # Cucumber-export
 
-This cucumber formatter works well with cucumber versions from 6.x inclusive
+### ⚠️ This package is compatible with cucumberJs 7.x, please share your interest on the migration if you want us to prioritize it.
+
+This cucumber formatter works well with cucumber versions to 6.x inclusive
+
+
+## Table of content
+
+- [Installation](#installation)
+- [API](#api)
+  - [getFormatter([options])](#cucumberexportgetformatteroptions)
+- [Usage](#usage)
+  - [Setup your formatter](#setup-your-formatter-through-cucumber)
+  - [Run with cucumber-js](#run-cucumber-js)
+  - [Setup as a module](#setup-as-a-module)
+- [Options](#options)
+- [Outputs](#outputs)
+  - [File](#file)
+  - [HTML](#html)
+  - [Webhook](#webhook)
+  - [Slack](#slack)
+  - [Microsoft Teams](#microsoft-teams)
+  - [Discord](#discord)
+  - [Line](#line)
+  - [Mattermost](#mattermost)
+  - [Elastic-Search](#elastic-search)
+     - [kibana](#kibana)
+     - [Grafana](#grafana)
+  - [http-html-report](#http-html-report)
+- [Development](#development)
+- [Todo](#todo)
 
 ## Installation
 
@@ -140,7 +169,7 @@ let envConfig = {
 module.exports = getFormatter(envConfig)
 ```
 
-### Run cucumber-js
+### Run with cucumber-js
 
 You can now run cucumber-js with the just created formatter
 
@@ -180,7 +209,7 @@ IMPORTANT : The duration can't be defined if you use this method. (it will appea
 
 
 
-#### Options
+## Options
 
 The Options are mandatory.
 
@@ -210,9 +239,11 @@ Represent a environment of the current test suite (example: uat)
 
 ##### outputs \<array> (required)
 
-You can configure different output, the available output reporters are :
+You can configure different output, see below the available output reporters.
 
-###### File
+## Outputs
+
+### File
 
 Export the result to a JSON file
 
@@ -226,7 +257,7 @@ Export the result to a JSON file
 }
 ```
 
-###### HTML
+### HTML
 
 Export the result to a local file folder as HTML format
 
@@ -245,7 +276,7 @@ _Example_:
 ![html](https://restqa.io/assets/img/utils/cucumber-export-html.png)
 
 
-###### Webhook
+### Webhook
 
 Export the result to a webhook
 
@@ -263,7 +294,7 @@ Export the result to a webhook
 }
 ```
 
-###### Slack
+### Slack
 
 Receive a notification on slack about you test report
 
@@ -284,7 +315,7 @@ _Example_:
 
 ![slack notification](https://restqa.io/assets/img/utils/cucumber-export-slack.png)
 
-###### Microsoft Teams
+### Microsoft Teams
 
 Receive a connector card in your Microsoft Teams channel when your test finishes
 
@@ -306,7 +337,7 @@ _Example_:
 
 ![teams notification](https://restqa.io/assets/img/utils/cucumber-export-teams.png)
 
-###### Discord
+### Discord
 
 Receive a message in your Discord channel when your test finishes via webhook. See how to set up the webhook bot here:
 
@@ -329,7 +360,7 @@ _Example_:
 
 ![discord notification](https://restqa.io/assets/img/utils/cucumber-export-discord.png)
 
-###### Line
+### Line
 
 Receive a notification on line about you test report
 
@@ -351,7 +382,7 @@ _Example_:
 
 ![line notification](https://restqa.io/assets/img/utils/cucumber-export-line.jpg)
 
-###### Mattermost
+### Mattermost
 
 Receive a notification in your Mattermost channel when your test finishes
 
@@ -391,7 +422,7 @@ _Example_:
 
 ![Mattermost notification](https://restqa.io/assets/img/utils/cucumber-export-mattermost.png)
 
-###### Elastic-Search
+### Elastic-Search
 
 Export the result to an elastic search server (using rolling index)
 
@@ -408,19 +439,19 @@ Export the result to an elastic search server (using rolling index)
 
 The Elastic Search export allows you to create nice dashboard within Grafana or Kibana. And the good things is that we already prepared everything for you :
 
-1. **Grafana**
+#### Grafana
 
 ![grafana](https://restqa.io/assets/img/utils/screenshot-grafana.png)
 
 [Access to the Grafana dashboard installation guide](./dashboard-setup/grafana/README.md)
 
-2. **kibana**
+#### kibana
 
 ![kibana](https://restqa.io/assets/img/utils/screenshot-kibana.png)
 
 [Access to the Kibana dashboard installation guide](./dashboard-setup/kibana/README.md)
 
-###### Http html Report
+### Http html Report
 
 Export the result to a remote endpoint in order to generate an html report.
 
@@ -461,6 +492,14 @@ Create channels for :
 - Google Hangouts
 - Prometheus
 - Grafana Loki
+- influxdb
+- statsd
+- testrail
+- teamcity
+- confluence
+- junit
+- Github Alert
+
 
 ## License
 
