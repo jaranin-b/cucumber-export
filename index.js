@@ -5,6 +5,7 @@ const Transport = require('./src')
 const fs = require('fs')
 
 function getFormatter (config) {
+  config.title = config.title || 'CUCUMBER EXPORT'
   return class RestQaFormatter extends Formatter {
     constructor (options) {
       super(options)
@@ -59,7 +60,7 @@ function getFormatter (config) {
               rejected: '❌'
             }
 
-            process.stdout.write('|===> CUCUMBER EXPORT 📦  \n')
+            process.stdout.write(`|===> ${config.title} 📦  \n`)
 
             let inProgress = true
             let response = []
