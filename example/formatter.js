@@ -5,6 +5,7 @@ const envConfig = {
   name: 'Payment API',
   key: 'PAY-API',
   env: 'uat',
+  //title: 'Hey Mate!',
   outputs: [
     {
       type: 'http',
