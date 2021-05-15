@@ -9,7 +9,9 @@
     "test:coverage": "jest --coverage",
     "lint": "standard index.js src/",
     "lint:fix": "standard --fix index.js src/",
-    "example": "cucumber-js -f example/formatter.js:restqa.log example/features"
+    "example": "cucumber-js -f example/formatter.js:restqa.log example/features",
+    "html-report:install": "npm install --prefix ./html-report-template",
+    "html-report:build": "npm run build --prefix ./html-report-template"
   },
   "repository": {
     "type": "git",
@@ -31,6 +33,12 @@
     "url": "https://github.com/restqa/cucumber-export/issues"
   },
   "homepage": "https://github.com/restqa/cucumber-export#readme",
+  "files": [
+    "index.js",
+    "src",
+    "html-report-template/dist",
+    "!**/**/*.test.js"
+  ],
   "dependencies": {
     "async": "^3.2.0",
     "cucumber": "^6.0.5",
