@@ -1,6 +1,8 @@
 const moment = require('moment')
 
 module.exports = function (metadata, testResult) {
+
+  console.log(testResult)
   metadata.duration = metadata.duration / 1e9
   metadata.durationFormat = moment.utc(metadata.duration / 1e6).format('mm:ss')
 
@@ -54,7 +56,8 @@ module.exports = function (metadata, testResult) {
     type: 'testSuite',
     total: features.length,
     passed: features.filter(r => r.result).length,
-    failed: features.filter(r => !r.result).length,
+    failed: features.filter(r => r.total !== r.skipped).filter(r => !r.result).length,
+    skipped: features.filter(r => r.total === r.skipped).length,
     scenarios: {
       passed: features.reduce((total, feature) => total + feature.passed, 0),
       failed: features.reduce((total, feature) => total + feature.failed, 0),
