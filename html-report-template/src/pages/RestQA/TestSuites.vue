@@ -143,6 +143,9 @@ export default {
         label: 'Passed',
         data: this.getResult().passed
       }, {
+        label: 'Skipped',
+        data: this.getResult().skipped
+      }, {
         label: 'Failed',
         data: this.getResult().failed
       }]
@@ -171,7 +174,7 @@ export default {
       return this.getResult() ? this.getResult().features : []
     },
     featuresForChart () {
-      let { success, danger } = this.appConfig.colors
+      let { success, danger, info } = this.appConfig.colors
       let series = [
         {
           name: 'Features',
@@ -211,7 +214,7 @@ export default {
             }
           }
         },
-        colors: [success, danger],
+        colors: [success, info, danger],
         legend: {
           align: 'right',
           verticalAlign: 'middle',

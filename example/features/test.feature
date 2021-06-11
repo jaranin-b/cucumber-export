@@ -1,3 +1,4 @@
+@skip
 Feature: As a user i can manage my account
 
 Scenario: Access to my account from the dashboad page

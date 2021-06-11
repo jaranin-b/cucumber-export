@@ -1,101 +1,89 @@
-/*
- * *****************************************************************************************
- * *****************************************************************************************
- * *****************************************************************************************
- * *****************************************************************************************
- *
- * THIS FILE IS USED FOR DEVELOPMENT PURPOSED ONLY
- *
- * *****************************************************************************************
- * *****************************************************************************************
- * *****************************************************************************************
- * *****************************************************************************************
- * */
-
-
 window.RESTQA_RESULT = {
-  "id": "ae49de52-16eb-48e0-b6c1-753667485126",
-  "startTime": "2021-04-27T01:37:36+00:00",
+  "id": "77fdb76c-61d8-4ff3-b857-3e3933af91c1",
+  "startTime": "2021-06-09T16:58:58+07:00",
   "name": "Payment API",
   "key": "PAY-API",
   "env": "uat",
-  "duration": 12.043,
+  "duration": 6.015,
   "success": false,
   "durationFormat": "00:00",
-  "timestamp": "2021-04-27T01:37:36+00:00",
+  "timestamp": "2021-06-09T16:58:58+07:00",
   "type": "testSuite",
   "total": 2,
   "passed": 0,
   "failed": 2,
+  "skipped": 1,
   "scenarios": {
     "passed": 0,
-    "failed": 4,
-    "skipped": 0,
+    "failed": 2,
+    "skipped": 2,
     "undefined": 0
   },
   "features": [
     {
       "keyword": "Feature",
-      "line": 1,
+      "line": 2,
       "id": "as-a-user-i-can-manage-my-account",
-      "tags": [],
+      "tags": [
+        {
+          "name": "@skip",
+          "line": 1
+        }
+      ],
       "uri": "example/features/test.feature",
       "elements": [
         {
           "id": "as-a-user-i-can-manage-my-account;access-to-my-account-from-the-dashboad-page",
           "keyword": "Scenario",
-          "line": 3,
+          "line": 4,
           "name": "Access to my account from the dashboad page",
-          "tags": [],
+          "tags": [
+            {
+              "name": "@skip",
+              "line": 1
+            }
+          ],
           "type": "scenario",
           "steps": [
             {
+              "keyword": "Before",
+              "hidden": true,
+              "match": {
+                "location": "example/features/setup.js:5"
+              },
+              "result": {
+                "status": "skipped",
+                "duration": 1000000
+              }
+            },
+            {
               "arguments": [],
               "keyword": "Given ",
-              "line": 4,
+              "line": 5,
               "name": "I have the dashboard page",
               "match": {
                 "location": "example/features/setup.js:9"
               },
               "result": {
-                "status": "passed",
-                "duration": 3003000000
-              },
-              "embeddings": [
-                {
-                  "data": "here you go",
-                  "mime_type": "text/plain"
-                },
-                {
-                  "data": "{\"name\": \"some JSON\"}",
-                  "mime_type": "application/json"
-                }
-              ]
+                "status": "skipped"
+              }
             },
             {
               "arguments": [],
               "keyword": "When ",
-              "line": 5,
+              "line": 6,
               "name": "I click on my account",
               "match": {
                 "location": "example/features/setup.js:15"
               },
               "result": {
-                "status": "failed",
-                "duration": 0,
-                "error_message": "Error: The button my button hasn't been found\n    at World.<anonymous> (/usr/src/app/example/features/setup.js:17:9)"
-              },
-              "embeddings": [
-                {
-                  "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-                  "mime_type": "text/plain"
-                }
-              ]
+                "status": "skipped"
+              }
             },
             {
               "arguments": [],
               "keyword": "Then ",
-              "line": 6,
+              "line": 7,
               "name": "The title of the page should be \"My account\"",
               "match": {
                 "location": "example/features/setup.js:20"
@@ -107,7 +95,7 @@ window.RESTQA_RESULT = {
             {
               "arguments": [],
               "keyword": "And ",
-              "line": 7,
+              "line": 8,
               "name": "this is whut ?",
               "result": {
                 "status": "undefined"
@@ -121,7 +109,7 @@ window.RESTQA_RESULT = {
               },
               "result": {
                 "status": "passed",
-                "duration": 15000000
+                "duration": 2000000
               },
               "embeddings": [
                 {
@@ -131,21 +119,21 @@ window.RESTQA_RESULT = {
               ]
             }
           ],
-          "step_passed": 2,
-          "step_failed": 1,
-          "step_skipped": 1,
+          "step_passed": 1,
+          "step_failed": 0,
+          "step_skipped": 4,
           "step_undefined": 1,
           "result": false,
-          "status": "failed",
-          "duration": 3.018,
-          "timestamp": "2021-04-27T01:37:36+00:00",
+          "status": "skipped",
+          "duration": 0.003,
+          "timestamp": "2021-06-09T16:58:58+07:00",
           "metadata": {
-            "id": "ae49de52-16eb-48e0-b6c1-753667485126",
-            "startTime": "2021-04-27T01:37:36+00:00",
+            "id": "77fdb76c-61d8-4ff3-b857-3e3933af91c1",
+            "startTime": "2021-06-09T16:58:58+07:00",
             "name": "Payment API",
             "key": "PAY-API",
             "env": "uat",
-            "duration": 12.043,
+            "duration": 6.015,
             "success": false,
             "durationFormat": "00:00"
           }
@@ -153,58 +141,55 @@ window.RESTQA_RESULT = {
         {
           "id": "as-a-user-i-can-manage-my-account;access-to-my-account-from-the-menu",
           "keyword": "Scenario",
-          "line": 9,
+          "line": 10,
           "name": "Access to my account from the menu",
-          "tags": [],
+          "tags": [
+            {
+              "name": "@skip",
+              "line": 1
+            }
+          ],
           "type": "scenario",
           "steps": [
             {
+              "keyword": "Before",
+              "hidden": true,
+              "match": {
+                "location": "example/features/setup.js:5"
+              },
+              "result": {
+                "status": "skipped",
+                "duration": 0
+              }
+            },
+            {
               "arguments": [],
               "keyword": "Given ",
-              "line": 10,
+              "line": 11,
               "name": "I have the dashboard page",
               "match": {
                 "location": "example/features/setup.js:9"
               },
               "result": {
-                "status": "passed",
-                "duration": 3000000000
-              },
-              "embeddings": [
-                {
-                  "data": "here you go",
-                  "mime_type": "text/plain"
-                },
-                {
-                  "data": "{\"name\": \"some JSON\"}",
-                  "mime_type": "application/json"
-                }
-              ]
+                "status": "skipped"
+              }
             },
             {
               "arguments": [],
               "keyword": "When ",
-              "line": 11,
+              "line": 12,
               "name": "I click on my account",
               "match": {
                 "location": "example/features/setup.js:15"
               },
               "result": {
-                "status": "failed",
-                "duration": 1000000,
-                "error_message": "Error: The button my button hasn't been found\n    at World.<anonymous> (/usr/src/app/example/features/setup.js:17:9)"
-              },
-              "embeddings": [
-                {
-                  "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-                  "mime_type": "text/plain"
-                }
-              ]
+                "status": "skipped"
+              }
             },
             {
               "arguments": [],
               "keyword": "Then ",
-              "line": 12,
+              "line": 13,
               "name": "The title of the page should be \"My account\"",
               "match": {
                 "location": "example/features/setup.js:20"
@@ -221,7 +206,7 @@ window.RESTQA_RESULT = {
               },
               "result": {
                 "status": "passed",
-                "duration": 5000000
+                "duration": 0
               },
               "embeddings": [
                 {
@@ -231,21 +216,21 @@ window.RESTQA_RESULT = {
               ]
             }
           ],
-          "step_passed": 2,
-          "step_failed": 1,
-          "step_skipped": 1,
+          "step_passed": 1,
+          "step_failed": 0,
+          "step_skipped": 4,
           "step_undefined": 0,
           "result": false,
-          "status": "failed",
-          "duration": 3.006,
-          "timestamp": "2021-04-27T01:37:36+00:00",
+          "status": "skipped",
+          "duration": 0,
+          "timestamp": "2021-06-09T16:58:58+07:00",
           "metadata": {
-            "id": "ae49de52-16eb-48e0-b6c1-753667485126",
-            "startTime": "2021-04-27T01:37:36+00:00",
+            "id": "77fdb76c-61d8-4ff3-b857-3e3933af91c1",
+            "startTime": "2021-06-09T16:58:58+07:00",
             "name": "Payment API",
             "key": "PAY-API",
             "env": "uat",
-            "duration": 12.043,
+            "duration": 6.015,
             "success": false,
             "durationFormat": "00:00"
           }
@@ -253,21 +238,21 @@ window.RESTQA_RESULT = {
       ],
       "total": 2,
       "passed": 0,
-      "failed": 2,
-      "skipped": 0,
+      "failed": 0,
+      "skipped": 2,
       "undefined": 0,
       "result": false,
-      "duration": 6.023999999999999,
-      "timestamp": "2021-04-27T01:37:36+00:00",
+      "duration": 0.003,
+      "timestamp": "2021-06-09T16:58:58+07:00",
       "type": "feature",
       "feature_name": "As a user i can manage my account",
       "metadata": {
-        "id": "ae49de52-16eb-48e0-b6c1-753667485126",
-        "startTime": "2021-04-27T01:37:36+00:00",
+        "id": "77fdb76c-61d8-4ff3-b857-3e3933af91c1",
+        "startTime": "2021-06-09T16:58:58+07:00",
         "name": "Payment API",
         "key": "PAY-API",
         "env": "uat",
-        "duration": 12.043,
+        "duration": 6.015,
         "success": false,
         "durationFormat": "00:00"
       }
@@ -320,8 +305,8 @@ window.RESTQA_RESULT = {
               },
               "result": {
                 "status": "failed",
-                "duration": 1000000,
-                "error_message": "Error: The button my button hasn't been found\n    at World.<anonymous> (/usr/src/app/example/features/setup.js:17:9)"
+                "duration": 0,
+                "error_message": "Error: The button my button hasn't been found\n    at World.<anonymous> (/Users/olivierodo/WORKS/restqa/cucumber-export/example/features/setup.js:17:9)"
               },
               "embeddings": [
                 {
@@ -350,7 +335,7 @@ window.RESTQA_RESULT = {
               },
               "result": {
                 "status": "passed",
-                "duration": 4000000
+                "duration": 1000000
               },
               "embeddings": [
                 {
@@ -366,15 +351,15 @@ window.RESTQA_RESULT = {
           "step_undefined": 0,
           "result": false,
           "status": "failed",
-          "duration": 3.011,
-          "timestamp": "2021-04-27T01:37:36+00:00",
+          "duration": 3.007,
+          "timestamp": "2021-06-09T16:58:58+07:00",
           "metadata": {
-            "id": "ae49de52-16eb-48e0-b6c1-753667485126",
-            "startTime": "2021-04-27T01:37:36+00:00",
+            "id": "77fdb76c-61d8-4ff3-b857-3e3933af91c1",
+            "startTime": "2021-06-09T16:58:58+07:00",
             "name": "Payment API",
             "key": "PAY-API",
             "env": "uat",
-            "duration": 12.043,
+            "duration": 6.015,
             "success": false,
             "durationFormat": "00:00"
           }
@@ -397,7 +382,7 @@ window.RESTQA_RESULT = {
               },
               "result": {
                 "status": "passed",
-                "duration": 3002000000
+                "duration": 3003000000
               },
               "embeddings": [
                 {
@@ -420,8 +405,8 @@ window.RESTQA_RESULT = {
               },
               "result": {
                 "status": "failed",
-                "duration": 1000000,
-                "error_message": "Error: The button my button hasn't been found\n    at World.<anonymous> (/usr/src/app/example/features/setup.js:17:9)"
+                "duration": 0,
+                "error_message": "Error: The button my button hasn't been found\n    at World.<anonymous> (/Users/olivierodo/WORKS/restqa/cucumber-export/example/features/setup.js:17:9)"
               },
               "embeddings": [
                 {
@@ -438,7 +423,7 @@ window.RESTQA_RESULT = {
               },
               "result": {
                 "status": "passed",
-                "duration": 5000000
+                "duration": 2000000
               },
               "embeddings": [
                 {
@@ -454,15 +439,15 @@ window.RESTQA_RESULT = {
           "step_undefined": 0,
           "result": false,
           "status": "failed",
-          "duration": 3.008,
-          "timestamp": "2021-04-27T01:37:36+00:00",
+          "duration": 3.005,
+          "timestamp": "2021-06-09T16:58:58+07:00",
           "metadata": {
-            "id": "ae49de52-16eb-48e0-b6c1-753667485126",
-            "startTime": "2021-04-27T01:37:36+00:00",
+            "id": "77fdb76c-61d8-4ff3-b857-3e3933af91c1",
+            "startTime": "2021-06-09T16:58:58+07:00",
             "name": "Payment API",
             "key": "PAY-API",
             "env": "uat",
-            "duration": 12.043,
+            "duration": 6.015,
             "success": false,
             "durationFormat": "00:00"
           }
@@ -474,368 +459,20 @@ window.RESTQA_RESULT = {
       "skipped": 0,
       "undefined": 0,
       "result": false,
-      "duration": 6.019,
-      "timestamp": "2021-04-27T01:37:36+00:00",
+      "duration": 6.0120000000000005,
+      "timestamp": "2021-06-09T16:58:58+07:00",
       "type": "feature",
       "feature_name": "As a user i can manage my orders",
       "metadata": {
-        "id": "ae49de52-16eb-48e0-b6c1-753667485126",
-        "startTime": "2021-04-27T01:37:36+00:00",
+        "id": "77fdb76c-61d8-4ff3-b857-3e3933af91c1",
+        "startTime": "2021-06-09T16:58:58+07:00",
         "name": "Payment API",
         "key": "PAY-API",
         "env": "uat",
-        "duration": 12.043,
+        "duration": 6.015,
         "success": false,
         "durationFormat": "00:00"
       }
     }
   ]
 }
-/*
-window.RESTQA_RESULT = {
-  "id": "3bb63b07-d80c-4576-8922-73faa08f48fa",
-  "startTime": "2021-02-26T04:01:04+00:00",
-  "name": "Payment API",
-  "key": "PAY-API",
-  "env": "uat",
-  "duration": 12.015,
-  "success": false,
-  "durationFormat": "00:00",
-  "timestamp": "2021-02-26T04:01:04+00:00",
-  "type": "testSuite",
-  "total": 2,
-  "passed": 0,
-  "failed": 2,
-  "scenarios": {
-    "passed": 0,
-    "failed": 4,
-    "skipped": 0,
-    "undefined": 0
-  },
-  "features": [
-    {
-      "keyword": "Feature",
-      "line": 1,
-      "id": "as-a-user-i-can-manage-my-account",
-      "tags": [],
-      "uri": "features/test.feature",
-      "elements": [
-        {
-          "id": "as-a-user-i-can-manage-my-account;access-to-my-account-from-the-dashboad-page",
-          "keyword": "Scenario",
-          "line": 3,
-          "name": "Access to my account from the dashboad page",
-          "tags": [],
-          "type": "scenario",
-          "steps": [
-            {
-              "arguments": [],
-              "keyword": "Given ",
-              "line": 4,
-              "name": "I have the dashboard page",
-              "match": {
-                "location": "features/setup.js:7"
-              },
-              "result": {
-                "status": "passed",
-                "duration": 3006000000
-              }
-            },
-            {
-              "arguments": [],
-              "keyword": "When ",
-              "line": 5,
-              "name": "I click on my account",
-              "match": {
-                "location": "features/setup.js:11"
-              },
-              "result": {
-                "status": "failed",
-                "duration": 0,
-                "error_message": "Error: The button my button hasn't been found\n    at World.<anonymous> (/usr/src/app/features/setup.js:12:9)"
-              }
-            },
-            {
-              "arguments": [],
-              "keyword": "Then ",
-              "line": 6,
-              "name": "The title of the page should be \"My account\"",
-              "match": {
-                "location": "features/setup.js:15"
-              },
-              "result": {
-                "status": "skipped"
-              }
-            },
-            {
-              "arguments": [],
-              "keyword": "And ",
-              "line": 7,
-              "name": "this is whut ?",
-              "result": {
-                "status": "undefined"
-              }
-            }
-          ],
-          "step_passed": 1,
-          "step_failed": 1,
-          "step_skipped": 1,
-          "step_undefined": 1,
-          "result": false,
-          "status": "failed",
-          "duration": 3.006,
-          "timestamp": "2021-02-26T04:01:04+00:00",
-          "metadata": {
-            "id": "3bb63b07-d80c-4576-8922-73faa08f48fa",
-            "startTime": "2021-02-26T04:01:04+00:00",
-            "name": "Payment API",
-            "key": "PAY-API",
-            "env": "uat",
-            "duration": 12.015,
-            "success": false,
-            "durationFormat": "00:00"
-          }
-        },
-        {
-          "id": "as-a-user-i-can-manage-my-account;access-to-my-account-from-the-menu",
-          "keyword": "Scenario",
-          "line": 9,
-          "name": "Access to my account from the menu",
-          "tags": [],
-          "type": "scenario",
-          "steps": [
-            {
-              "arguments": [],
-              "keyword": "Given ",
-              "line": 10,
-              "name": "I have the dashboard page",
-              "match": {
-                "location": "features/setup.js:7"
-              },
-              "result": {
-                "status": "passed",
-                "duration": 3002000000
-              }
-            },
-            {
-              "arguments": [],
-              "keyword": "When ",
-              "line": 11,
-              "name": "I click on my account",
-              "match": {
-                "location": "features/setup.js:11"
-              },
-              "result": {
-                "status": "failed",
-                "duration": 1000000,
-                "error_message": "Error: The button my button hasn't been found\n    at World.<anonymous> (/usr/src/app/features/setup.js:12:9)"
-              }
-            },
-            {
-              "arguments": [],
-              "keyword": "Then ",
-              "line": 12,
-              "name": "The title of the page should be \"My account\"",
-              "match": {
-                "location": "features/setup.js:15"
-              },
-              "result": {
-                "status": "skipped"
-              }
-            }
-          ],
-          "step_passed": 1,
-          "step_failed": 1,
-          "step_skipped": 1,
-          "step_undefined": 0,
-          "result": false,
-          "status": "failed",
-          "duration": 3.003,
-          "timestamp": "2021-02-26T04:01:04+00:00",
-          "metadata": {
-            "id": "3bb63b07-d80c-4576-8922-73faa08f48fa",
-            "startTime": "2021-02-26T04:01:04+00:00",
-            "name": "Payment API",
-            "key": "PAY-API",
-            "env": "uat",
-            "duration": 12.015,
-            "success": false,
-            "durationFormat": "00:00"
-          }
-        }
-      ],
-      "total": 2,
-      "passed": 0,
-      "failed": 2,
-      "skipped": 0,
-      "undefined": 0,
-      "result": false,
-      "duration": 6.009,
-      "timestamp": "2021-02-26T04:01:04+00:00",
-      "type": "feature",
-      "feature_name": "As a user i can manage my account",
-      "metadata": {
-        "id": "3bb63b07-d80c-4576-8922-73faa08f48fa",
-        "startTime": "2021-02-26T04:01:04+00:00",
-        "name": "Payment API",
-        "key": "PAY-API",
-        "env": "uat",
-        "duration": 12.015,
-        "success": false,
-        "durationFormat": "00:00"
-      }
-    },
-    {
-      "keyword": "Feature",
-      "line": 1,
-      "id": "as-a-user-i-can-manage-my-orders",
-      "tags": [],
-      "uri": "features/test2.feature",
-      "elements": [
-        {
-          "id": "as-a-user-i-can-manage-my-orders;access-to-my-orders-from-the-dashboad-page",
-          "keyword": "Scenario",
-          "line": 3,
-          "name": "Access to my orders from the dashboad page",
-          "tags": [],
-          "type": "scenario",
-          "steps": [
-            {
-              "arguments": [],
-              "keyword": "Given ",
-              "line": 4,
-              "name": "I have the dashboard page",
-              "match": {
-                "location": "features/setup.js:7"
-              },
-              "result": {
-                "status": "passed",
-                "duration": 3002000000
-              }
-            },
-            {
-              "arguments": [],
-              "keyword": "When ",
-              "line": 5,
-              "name": "I click on my account",
-              "match": {
-                "location": "features/setup.js:11"
-              },
-              "result": {
-                "status": "failed",
-                "duration": 1000000,
-                "error_message": "Error: The button my button hasn't been found\n    at World.<anonymous> (/usr/src/app/features/setup.js:12:9)"
-              }
-            },
-            {
-              "arguments": [],
-              "keyword": "Then ",
-              "line": 6,
-              "name": "The title of the page should be \"My account\"",
-              "match": {
-                "location": "features/setup.js:15"
-              },
-              "result": {
-                "status": "skipped"
-              }
-            }
-          ],
-          "step_passed": 1,
-          "step_failed": 1,
-          "step_skipped": 1,
-          "step_undefined": 0,
-          "result": false,
-          "status": "failed",
-          "duration": 3.003,
-          "timestamp": "2021-02-26T04:01:04+00:00",
-          "metadata": {
-            "id": "3bb63b07-d80c-4576-8922-73faa08f48fa",
-            "startTime": "2021-02-26T04:01:04+00:00",
-            "name": "Payment API",
-            "key": "PAY-API",
-            "env": "uat",
-            "duration": 12.015,
-            "success": false,
-            "durationFormat": "00:00"
-          }
-        },
-        {
-          "id": "as-a-user-i-can-manage-my-orders;access-to-my-orders-from-the-menu",
-          "keyword": "Scenario",
-          "line": 8,
-          "name": "Access to my orders from the menu",
-          "tags": [],
-          "type": "scenario",
-          "steps": [
-            {
-              "arguments": [],
-              "keyword": "Given ",
-              "line": 9,
-              "name": "I have the dashboard page",
-              "match": {
-                "location": "features/setup.js:7"
-              },
-              "result": {
-                "status": "passed",
-                "duration": 3002000000
-              }
-            },
-            {
-              "arguments": [],
-              "keyword": "When ",
-              "line": 10,
-              "name": "I click on my account",
-              "match": {
-                "location": "features/setup.js:11"
-              },
-              "result": {
-                "status": "failed",
-                "duration": 1000000,
-                "error_message": "Error: The button my button hasn't been found\n    at World.<anonymous> (/usr/src/app/features/setup.js:12:9)"
-              }
-            }
-          ],
-          "step_passed": 1,
-          "step_failed": 1,
-          "step_skipped": 0,
-          "step_undefined": 0,
-          "result": false,
-          "status": "failed",
-          "duration": 3.003,
-          "timestamp": "2021-02-26T04:01:04+00:00",
-          "metadata": {
-            "id": "3bb63b07-d80c-4576-8922-73faa08f48fa",
-            "startTime": "2021-02-26T04:01:04+00:00",
-            "name": "Payment API",
-            "key": "PAY-API",
-            "env": "uat",
-            "duration": 12.015,
-            "success": false,
-            "durationFormat": "00:00"
-          }
-        }
-      ],
-      "total": 2,
-      "passed": 0,
-      "failed": 2,
-      "skipped": 0,
-      "undefined": 0,
-      "result": false,
-      "duration": 6.006,
-      "timestamp": "2021-02-26T04:01:04+00:00",
-      "type": "feature",
-      "feature_name": "As a user i can manage my orders",
-      "metadata": {
-        "id": "3bb63b07-d80c-4576-8922-73faa08f48fa",
-        "startTime": "2021-02-26T04:01:04+00:00",
-        "name": "Payment API",
-        "key": "PAY-API",
-        "env": "uat",
-        "duration": 12.015,
-        "success": false,
-        "durationFormat": "00:00"
-      }
-    }
-  ]
-}
-*/

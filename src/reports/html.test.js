@@ -14,7 +14,7 @@ beforeEach(() => {
 
 describe('#Channel - html', () => {
 
-  test('Copy files from html-report/dist and add the result files', (done) => {
+  test('Copy files from html-report/dist and add the result files', async (done) => {
     const Html = require('./html')
     const config = {
       folder: FOLDER
@@ -23,7 +23,7 @@ describe('#Channel - html', () => {
       "foo": "bar"
     }
 
-    expect(Html(config, result)).resolves.toEqual(`[HTML REPORT][SUCCESS] - Your report has been generated at file:///tmp/report/index.html`)
+    await expect(Html(config, result)).resolves.toEqual(`[HTML REPORT][SUCCESS] - Your report has been generated at file://${FOLDER}/index.html`)
 
     fs.readdirSync(HTML_TEMPLATE_FOLDER).forEach( item => {
       let expectedFilename = fs.existsSync(path.resolve(FOLDER, item)) 

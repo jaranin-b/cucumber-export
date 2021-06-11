@@ -31,7 +31,7 @@ const envConfig = {
     },
     {
       type: 'http-html-report',
-      enabled: true
+      enabled: false
     },
     {
       type: 'html',
