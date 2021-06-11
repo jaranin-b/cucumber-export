@@ -2,7 +2,6 @@ const moment = require('moment')
 
 module.exports = function (metadata, testResult) {
 
-  console.log(testResult)
   metadata.duration = metadata.duration / 1e9
   metadata.durationFormat = moment.utc(metadata.duration / 1e6).format('mm:ss')
 
