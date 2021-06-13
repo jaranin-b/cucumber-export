@@ -17,6 +17,26 @@ describe('#index - src', () => {
     expect(Format.mock.calls.length).toBe(0)
   })
 
+  test('Throw Error when the config outputs contains an invalid report type', () => {
+    const Format = require('./format')
+    jest.mock('./format')
+
+    const list = require('./reports')
+    const Index = require('./index')
+    const config = {
+      outputs: [{
+        type: 'spaceX',
+        enabled: true
+      }]
+    }
+    const testRunResult = {}
+    expect(() => {
+      /* eslint-disable no-new */
+      new Index(config, testRunResult)
+    }).toThrow(`The spaceX output doesn\'t exist. Available: ${Object.keys(list).join(', ')}`)
+    expect(Format.mock.calls.length).toBe(0)
+  })
+
   test('No output', () => {
     const Format = require('./format')
     jest.mock('./format')
@@ -46,13 +66,13 @@ describe('#index - src', () => {
     let Reports = require('./reports')
     jest.mock('./reports')
     Reports = {
-      elk: jest.fn()
+      'elastic-search': jest.fn()
     }
 
     const Index = require('./index')
     const config = {
       outputs: [{
-        type: 'elk',
+        type: 'elastic-search',
         enabled: false
       }]
     }
@@ -77,7 +97,7 @@ describe('#index - src', () => {
       ...testRunResult.result
     }
     expect(Format.mock.calls[0][0]).toEqual(expectedMetadata, [{ foo: 'bar' }])
-    expect(Reports.elk.mock.calls.length).toBe(0)
+    expect(Reports['elastic-search'].mock.calls.length).toBe(0)
   })
 
   test('Success calls with some ouputs enabled', async () => {
@@ -89,7 +109,7 @@ describe('#index - src', () => {
 
     const Reports = require('./reports')
     jest.mock('./reports')
-    Reports.elk = jest.fn(() => Promise.resolve(['my elk response']))
+    Reports['elastic-search'] = jest.fn(() => Promise.resolve(['my elk response']))
 
     const Index = require('./index')
     const config = {
@@ -98,7 +118,7 @@ describe('#index - src', () => {
       key: 'my key',
       env: 'my env',
       outputs: [{
-        type: 'elk',
+        type: 'elastic-search',
         enabled: true,
         config: {
           you: 'test'
@@ -132,9 +152,9 @@ describe('#index - src', () => {
 
     expect(Format.mock.calls[0][0]).toEqual(expectedMetadata, [{ foo: 'bar' }])
 
-    expect(Reports.elk.mock.calls.length).toBe(1)
-    expect(Reports.elk.mock.calls[0][0]).toEqual({ you: 'test' })
-    expect(Reports.elk.mock.calls[0][1]).toEqual({ result: true })
+    expect(Reports['elastic-search'].mock.calls.length).toBe(1)
+    expect(Reports['elastic-search'].mock.calls[0][0]).toEqual({ you: 'test' })
+    expect(Reports['elastic-search'].mock.calls[0][1]).toEqual({ result: true })
   })
 
   test('Error returns from the return', async () => {
@@ -144,14 +164,14 @@ describe('#index - src', () => {
 
     const Reports = require('./reports')
     jest.mock('./reports')
-    Reports.elk = jest.fn(() => Promise.reject(new Error('my elk Error')))
+    Reports['elastic-search'] = jest.fn(() => Promise.reject(new Error('my elk Error')))
 
     const Index = require('./index')
     const config = {
       uuid: 987,
       startTime: '2020–01–30T12:34:56+00:00',
       outputs: [{
-        type: 'elk',
+        type: 'elastic-search',
         enabled: true,
         config: {
           you: 'test'
@@ -185,8 +205,8 @@ describe('#index - src', () => {
 
     expect(Format.mock.calls[0][0]).toEqual(expectedMetadata, [{ foo: 'bar' }])
 
-    expect(Reports.elk.mock.calls.length).toBe(1)
-    expect(Reports.elk.mock.calls[0][0]).toEqual({ you: 'test' })
-    expect(Reports.elk.mock.calls[0][1]).toEqual({ result: true })
+    expect(Reports['elastic-search'].mock.calls.length).toBe(1)
+    expect(Reports['elastic-search'].mock.calls[0][0]).toEqual({ you: 'test' })
+    expect(Reports['elastic-search'].mock.calls[0][1]).toEqual({ result: true })
   })
 })

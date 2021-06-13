@@ -8,6 +8,10 @@ module.exports = function (config, testSuiteResult) {
     throw new Error('The config.outputs needs to be an array')
   }
 
+  config.outputs.forEach(out => {
+    if(!Reports[out.type]) throw new Error(`The ${out.type} output doesn\'t exist. Available: ${Object.keys(Reports).join(', ')}`)
+  })
+
   function exports (result) {
     if (!result.length) return
 
