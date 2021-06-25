@@ -8,5 +8,6 @@ module.exports = {
   discord: require('./discord'),
   line: require('./line'),
   mattermost: require('./mattermost'),
-  html: require('./html')
+  html: require('./html'),
+  stream: require('./stream')
 }

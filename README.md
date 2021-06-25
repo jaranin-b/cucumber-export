@@ -28,6 +28,7 @@ This cucumber formatter works well with cucumber versions to 6.x inclusive
      - [kibana](#kibana)
      - [Grafana](#grafana)
   - [http-html-report](#http-html-report)
+  - [stream](#stream)
 - [Development](#development)
 - [Todo](#todo)
 
@@ -61,12 +62,28 @@ Create a new file at the root of your project. (restqa-formatter.js)
 # <root-dir>/restqa-formatter.js
 
 const { getFormatter } = require('@restqa/cucumber-export')
+const stream = require('stream')
+const instance = new stream.Writable({
+  write: (data, encoding, next) => {
+    console.log(JSON.parse(data.toString('utf-8')))
+    next()
+  }
+})
+
+
 
 let envConfig = {
   uuid: 'xxx-yyy-zzz',
   name: 'local',
   env: 'uat',
   outputs: [
+    {
+      type: 'stream',
+      enabled: true,
+      config: {
+        instance: instance
+      }
+    },
     {
       type: 'html',
       enabled: true,
@@ -246,6 +263,20 @@ Represent a environment of the current test suite (example: uat)
 You can configure different output, see below the available output reporters.
 
 ## Outputs
+
+### Stream
+
+Export the result to a Writable Stream
+
+```
+{
+  type: 'stream',
+  enabled: true,
+  config: {
+    instance: WritableStream // The writable stream instance
+  }
+}
+```
 
 ### File
 

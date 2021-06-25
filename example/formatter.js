@@ -1,4 +1,12 @@
+const stream = require('stream')
 const { getFormatter } = require('../index')
+
+const instance = new stream.Writable({
+  write: (data, encoding, next) => {
+    console.log(JSON.parse(data.toString('utf-8')))
+    next()
+  }
+})
 
 const envConfig = {
   //uuid: 'xxx-yyy-zzz',
@@ -8,7 +16,14 @@ const envConfig = {
   //title: 'Hey Mate!',
   outputs: [
     {
-      type: 'http',
+      type: 'stream',
+      enabled: true,
+      config: {
+        instance
+      }
+    },
+    {
+      type: 'webhook',
       enabled: false,
       config: {
         url: 'https://html-report.restqa.io',
