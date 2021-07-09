@@ -14,7 +14,7 @@ beforeEach(() => {
 
 describe('#Channel - html', () => {
 
-  test('Copy files from html-report/dist and add the result files', async (done) => {
+  test('Copy files from html-report/dist and add the result files', async () => {
     const Html = require('./html')
     const config = {
       folder: FOLDER
@@ -27,10 +27,9 @@ describe('#Channel - html', () => {
 
     fs.readdirSync(HTML_TEMPLATE_FOLDER).forEach( item => {
       let expectedFilename = fs.existsSync(path.resolve(FOLDER, item)) 
-      if(!expectedFilename) {
-        done.fail(`The file ${item} hasn't been copied into ${FOLDER}`)
-      } else {
-        done()
+      let err = undefined
+      if (!expectedFilename) {
+        throw new Error(`The file ${item} hasn't been copied into ${FOLDER}`)
       }
     })
 
