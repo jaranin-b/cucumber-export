@@ -1,5 +1,5 @@
 <template>
-<div class="steps d-flex justify-content-between align-items-center">
+<div v-if="isVisible" class="steps d-flex justify-content-between align-items-center">
   <div class="flex-grow-1" >
     <div class="d-flex align-items-center flex-grow-1">
       <h5 class="mr-3 d-flex " :class="getStepTitleClass(data)">
@@ -47,6 +47,11 @@ export default {
     return {
       info: false,
       error: this.data.result.error_message
+    }
+  },
+  computed: {
+    isVisible () {
+      return this.data.embeddings || this.data.hidden !== true
     }
   },
   methods: {
