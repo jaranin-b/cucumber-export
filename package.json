@@ -48,6 +48,7 @@
   },
   "devDependencies": {
     "@cucumber/cucumber": "^7.3.0",
+    "@cucumber/messages": "^16.0.1",
     "husky": "^4.3.0",
     "jest": "^25.1.0",
     "rimraf": "^3.0.2",
