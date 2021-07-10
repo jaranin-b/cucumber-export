@@ -1,6 +1,6 @@
 {
   "name": "@restqa/cucumber-export",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "A simple cucumber-js formatter exporting your result to different endpoints",
   "main": "index.js",
   "scripts": {
@@ -50,7 +50,7 @@
     "@cucumber/cucumber": "^7.3.0",
     "@cucumber/messages": "^16.0.1",
     "husky": "^4.3.0",
-    "jest": "^25.1.0",
+    "jest": "^27.0.6",
     "rimraf": "^3.0.2",
     "standard": "^14.3.3"
   },
