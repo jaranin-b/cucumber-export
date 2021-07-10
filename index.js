@@ -1,6 +1,6 @@
-const { JsonFormatter, Formatter } = require('cucumber')
-const argvParser = require('cucumber/lib/cli/argv_parser').default
-const optionSplitter = require('cucumber/lib/cli/option_splitter').default
+const { JsonFormatter, Formatter } = require('@cucumber/cucumber')
+const argvParser = require('@cucumber/cucumber/lib/cli/argv_parser').default
+const optionSplitter = require('@cucumber/cucumber/lib/cli/option_splitter').default
 const Transport = require('./src')
 const fs = require('fs')
 

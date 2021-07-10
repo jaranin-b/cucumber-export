@@ -1,4 +1,4 @@
-let { Before, After, Given, When, Then } = require('cucumber')
+let { Before, After, Given, When, Then } = require('@cucumber/cucumber')
 const path = require('path')
 const fs = require('fs')
 
