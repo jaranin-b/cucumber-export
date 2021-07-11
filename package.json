@@ -9,16 +9,13 @@
     "test:coverage": "jest --coverage",
     "lint": "standard index.js src/",
     "lint:fix": "standard --fix index.js src/",
-    "example": "cucumber-js -f example/formatter.js:restqa.log example/features",
+    "example": "cucumber-js -f ./example/formatter.js:restqa.log example/features",
     "html-report:install": "npm install --prefix ./html-report-template",
     "html-report:build": "npm run build --prefix ./html-report-template"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/restqa/cucumber-export.git"
-  },
-  "peerDependencies": {
-    "cucumber": "^6.0.5"
   },
   "keywords": [
     "cucumber-reporter",
@@ -41,7 +38,6 @@
   ],
   "dependencies": {
     "async": "^3.2.0",
-    "cucumber": "^6.0.5",
     "fs-extra": "^9.1.0",
     "got": "^10.7.0",
     "moment": "^2.24.0",
@@ -51,6 +47,8 @@
     "node": ">=12.0.0"
   },
   "devDependencies": {
+    "@cucumber/cucumber": "^7.3.0",
+    "@cucumber/messages": "^16.0.1",
     "husky": "^4.3.0",
     "jest": "^27.0.6",
     "rimraf": "^3.0.2",

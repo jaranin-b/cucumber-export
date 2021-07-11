@@ -1,6 +1,7 @@
-const { JsonFormatter, Formatter } = require('cucumber')
-const argvParser = require('cucumber/lib/cli/argv_parser').default
-const optionSplitter = require('cucumber/lib/cli/option_splitter').default
+const { JsonFormatter, Formatter } = require('@cucumber/cucumber')
+const argvParser = require('@cucumber/cucumber/lib/cli/argv_parser').default
+const optionSplitter = require('@cucumber/cucumber/lib/cli/option_splitter').default
+const testStepResultStatus = require('@cucumber/messages').TestStepResultStatus
 const Transport = require('./src')
 const fs = require('fs')
 
@@ -12,18 +13,26 @@ function getFormatter (config) {
       if (this.stream.fd === process.stdout.fd) {
         // Stop the process IF the current stream is stdout...
         const errorMessage = [
-          this.colorFns.failed(
-            'You need to specify a PATH to store the debug logs (example: --format <TYPE[:PATH]>)'
-          ),
-          this.colorFns.pending(
-            '=> Refer at the cucumber-js documentation (https://github.com/cucumber/cucumber-js/blob/master/docs/cli.md#formats)'
-          ),
+          this.colorFns.forStatus((status) => {
+            const { FAILED, PENDING } = testStepResultStatus
+            switch (status) {
+              case FAILED:
+                return 'You need to specify a PATH to store the debug logs (example: --format <TYPE[:PATH]>)'
+              case PENDING:
+                return '=> Refer at the cucumber-js documentation (https://github.com/cucumber/cucumber-js/blob/master/docs/cli.md#formats)'
+            }
+          }),
           ''
         ]
         this.log(errorMessage.join('\n'))
         return
       }
-      options.eventBroadcaster.on('test-run-finished', this.onTestRunFinished.bind(this))
+
+      options.eventBroadcaster.on('envelope', (envelope) => {
+        if (envelope.testRunFinished) {
+          this.onTestRunFinished(envelope.testRunFinished)
+        }
+      })
     }
 
     getLogPath () {
@@ -54,6 +63,7 @@ function getFormatter (config) {
         const options = {
           eventDataCollector: this.eventDataCollector,
           eventBroadcaster: { on: () => {} },
+          supportCodeLibrary: this.supportCodeLibrary,
           log: async (result) => {
             const STATUS_ICON = {
               fulfilled: '✅',
