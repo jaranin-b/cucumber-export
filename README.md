@@ -1,8 +1,6 @@
 # Cucumber-export
 
-### ⚠️ This package is compatible with cucumberJs 7.x, please share your interest on the migration if you want us to prioritize it.
-
-This cucumber formatter works well with cucumber versions to 6.x inclusive
+> This cucumber formatter works well with cucumber version 7.x. If you are still using cucumber 6.x refer to the version @restqa/cucumber-export@0.1.10
 
 
 ## Table of content
