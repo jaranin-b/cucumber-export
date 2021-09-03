@@ -10,6 +10,7 @@
     "lint": "standard index.js src/",
     "lint:fix": "standard --fix index.js src/",
     "example": "cucumber-js -f ./example/formatter.js:restqa.log example/features",
+    "example:success": "cucumber-js -f ./example/formatter.js:restqa.log -t @success example/features",
     "html-report:install": "npm install --prefix ./html-report-template",
     "html-report:build": "npm run build --prefix ./html-report-template"
   },

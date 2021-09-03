@@ -9,7 +9,7 @@ Before('@skip', function() {
 Given('I have the dashboard page', function(cb) {
   this.attach('here you go')
   this.attach('{"name": "some JSON"}', 'application/json');
- setTimeout(cb, 3000)
+  setTimeout(cb, 3000)
 })
 
 When('I click on my account', function() {
